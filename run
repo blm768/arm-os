@@ -1,0 +1,1 @@
+qemu-system-arm -M versatilepb -cpu arm1176 -kernel kernel.bin -m 128 
