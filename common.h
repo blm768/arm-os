@@ -7,4 +7,6 @@
 
 typedef unsigned int uint;
 
+extern void error(uint);
+
 #endif

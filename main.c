@@ -6,8 +6,6 @@
 	0, 24,
 	0, 0};
 */
-	
-extern void error();
 
 void kmain() {
 	/*send_message(1, (int)&fb);
@@ -16,5 +14,6 @@ void kmain() {
 	error();*/
 	gpio_set_output(16);
 	gpio_set(16);
+	error(20);
 	while(1) {}
 }
