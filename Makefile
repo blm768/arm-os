@@ -3,7 +3,7 @@ C_H := $(shell find . -iname '*.h')
 C_OBJ := $(C_SRC:%.c=%.o) 
 OBJS := $(C_OBJ) start.o
 
-kernel.bin: kernel.elf
+kernel.img: kernel.elf
 	arm-none-eabi-objcopy $< -O binary $@ 
 
 kernel.elf: $(OBJS)

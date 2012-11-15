@@ -32,8 +32,7 @@ static inline int get_recv_status() {
 static inline int recv_message(int mBox) {
 	while(get_recv_status()) {}
 	//To do: check that this is the right mailbox.
-	return 0;
-	//return MAIL_RECV >> 4;
+	return MAIL_RECV >> 4;
 }
 
 #endif

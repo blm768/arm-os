@@ -4,6 +4,8 @@
 _start:
 bl kmain
 
+.section .text
+
 .global error
 error:
 	mov r0, #1
