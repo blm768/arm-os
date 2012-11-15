@@ -1,4 +1,5 @@
 #include "gpio.h"
+#include "timer.h"
 
 /*FramebufferInfo fb = {
 	1024, 768,
@@ -14,6 +15,5 @@ void kmain() {
 	error();*/
 	gpio_set_output(16);
 	gpio_set(16);
-	error(20);
 	while(1) {}
 }

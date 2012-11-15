@@ -5,7 +5,8 @@
 
 //typedef bool size_t;
 
-typedef unsigned int uint;
+typedef unsigned int  uint;
+typedef unsigned long ulong;
 
 extern void error(uint);
 

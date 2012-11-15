@@ -2,6 +2,7 @@
 
 .global _start
 _start:
+mov sp, #0x8000
 bl kmain
 
 .section .text
@@ -9,4 +10,3 @@ bl kmain
 .global error
 error:
 	b error
-	

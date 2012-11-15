@@ -8,9 +8,7 @@
 #define GPIO_CLEAR ((uint*)0x20200028)
 
 void gpio_set_output(uint pin);
-
 void gpio_set(uint pin);
-
 void gpio_clear(uint pin);
 
 #endif

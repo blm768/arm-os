@@ -8,9 +8,9 @@ kernel.img: kernel.elf
 
 kernel.elf: $(OBJS)
 	arm-none-eabi-ld $? -o $@ -T kernel.ld
-
-$(C_OBJ): %.o : %.c $(C_H) start.s
+	
+$(C_OBJ): %.o : %.c $(C_H)
 	arm-none-eabi-gcc --std=gnu99 -g -c $< -o $@
 
 start.o: start.s
-	arm-none-eabi-as start.s -o start.o	
+	arm-none-eabi-as start.s -o start.o
