@@ -1,4 +1,5 @@
 #include "gpio.h"
+#include "interrupt.h"
 #include "timer.h"
 
 /*FramebufferInfo fb = {
@@ -15,5 +16,7 @@ void kmain() {
 	error();*/
 	gpio_set_output(16);
 	gpio_set(16);
+	enable_irq(32);
+	error(irq_enable[1]);
 	while(1) {}
 }

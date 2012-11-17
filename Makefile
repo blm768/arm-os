@@ -1,3 +1,5 @@
+CFLAGS := --std=gnu99 -g -O2
+
 C_SRC := $(shell find . -iname '*.c')
 C_H := $(shell find . -iname '*.h')
 C_OBJ := $(C_SRC:%.c=%.o)
@@ -9,10 +11,10 @@ kernel.img: kernel.elf
 	arm-none-eabi-objcopy $< -O binary $@ 
 
 kernel.elf: $(OBJS)
-	arm-none-eabi-ld $? -o $@ -T kernel.ld
+	arm-none-eabi-ld $^ -o $@ -T kernel.ld
 	
 $(C_OBJ): %.o : %.c $(C_H)
-	arm-none-eabi-gcc --std=gnu99 -g -c $< -o $@
+	arm-none-eabi-gcc $(CFLAGS) -c $< -o $@
 
 $(ASM_OBJ): %.o: %.s
 	arm-none-eabi-as $< -o $@
