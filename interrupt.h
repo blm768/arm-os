@@ -31,6 +31,10 @@ typedef enum {
 extern uint irq_enable[3];
 extern uint irq_disable[3];
 
+static inline void irq_init() {
+	
+}
+
 static inline void enable_irq(IRQ irq) {
 	clear_word_and_set_bit(irq_enable, irq);
 }

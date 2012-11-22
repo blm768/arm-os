@@ -1,2 +1,2 @@
 export PATH=$PATH:/c/Users/BLM/Desktop/qemu/qemu
-qemu-system-arm -M versatilepb -cpu arm1176 -kernel kernel.elf -m 192 
+qemu-system-arm -M versatilepb -cpu arm1176 -kernel kernel.elf -m 192
