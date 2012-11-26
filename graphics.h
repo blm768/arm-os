@@ -3,36 +3,50 @@
 
 #include "common.h"
 
+typedef ubyte color_rgb[3];
+typedef ubyte color_rgba[4];
+
 typedef struct {
 	int width, height;
 	int vWidth, vHeight;
-	int pitch, depth;
+	volatile int pitch;
+	int depth;
 	int x, y;
-	void* buffer;
+	volatile color_rgb* buffer;
 	uint size;
-} FramebufferInfo;
+} __attribute__((__aligned__(16))) FramebufferInfo;
 
-#define MAIL_RECV (*(int*)0x2000B880)
-#define MAIL_SEND (*(int*)0x2000B8A0)
-#define MAIL_STATUS (*(int*)0x2000B898)
+typedef struct {
+	uint box: 4;
+	uint code: 28;
+} Message;
 
-static inline int get_send_status() {
+#define MAIL_RECV   (*(volatile Message*)0x2000B880)
+#define MAIL_SEND   (*(volatile uint*)0x2000B8A0)
+#define MAIL_STATUS (*(volatile uint*)0x2000B898)
+
+static inline volatile int get_send_status() {
 	return MAIL_STATUS & (1 << 31);
 };
 
-static inline bool send_message(int mBox, int msg) {
+static inline void send_message(int mBox, int msg) {
 	while(get_send_status()) {}
-	MAIL_SEND = mBox | (msg << 4);
+	MAIL_SEND = mBox | msg;
 }
 
-static inline int get_recv_status() {
-	return MAIL_STATUS & (1 << 30);
+static inline volatile int get_recv_status() {
+	return MAIL_STATUS & (1 << 29);
 }
 
-static inline int recv_message(int mBox) {
+static inline volatile Message recv_message(int mBox) {
 	while(get_recv_status()) {}
 	//To do: check that this is the right mailbox.
-	return MAIL_RECV >> 4;
+	Message msg = MAIL_RECV;
+	while(msg.box != mBox) {
+		while(get_recv_status()) {}
+		msg = MAIL_RECV;
+	}
+	return MAIL_RECV;
 }
 
 #endif

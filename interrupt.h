@@ -4,6 +4,23 @@
 #include "bitutils.h"
 #include "common.h"
 
+typedef void(*ISR)();
+
+typedef struct {
+	ISR reset;
+	ISR undefined;
+	ISR swi;
+	ISR prefetch;
+	ISR data;
+	ISR unused;
+	ISR irq;
+	ISR fiq;
+} InterruptHandlers;
+
+extern void _start();
+
+#define isrs (*(InterruptHandlers*)0x20)
+
 typedef enum {
 	aux = 29,
 	i2c_spi_slv = 43,
@@ -31,8 +48,10 @@ typedef enum {
 extern uint irq_enable[3];
 extern uint irq_disable[3];
 
+extern void asm_irq_init();
+
 static inline void irq_init() {
-	
+	asm_irq_init();
 }
 
 static inline void enable_irq(IRQ irq) {
