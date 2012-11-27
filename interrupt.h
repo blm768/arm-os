@@ -48,11 +48,8 @@ typedef enum {
 extern uint irq_enable[3];
 extern uint irq_disable[3];
 
-extern void asm_irq_init();
-
-static inline void irq_init() {
-	asm_irq_init();
-}
+extern void enable_irqs();
+extern void disable_irqs();
 
 static inline void enable_irq(IRQ irq) {
 	clear_word_and_set_bit(irq_enable, irq);
@@ -60,6 +57,17 @@ static inline void enable_irq(IRQ irq) {
 
 static inline void disable_irq(IRQ irq) {
 	clear_word_and_set_bit(irq_disable, irq);
+}
+
+extern void asm_irq_init();
+static inline void irq_init() {
+	asm_irq_init();
+}
+
+extern void asm_interrupt_init();
+static inline void interrupt_init() {
+	asm_interrupt_init();
+	irq_init();
 }
 
 #endif

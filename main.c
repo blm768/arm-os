@@ -3,6 +3,8 @@
 #include "interrupt.h"
 #include "timer.h"
 
+//To do: peripheral read/write barriers!
+
 FramebufferInfo fb = {
 	1024, 768,
 	1024, 768,
@@ -11,10 +13,11 @@ FramebufferInfo fb = {
 
 
 void kmain() {
-	irq_init();
+	interrupt_init();
 	gpio_set_output(16);
 	gpio_clear(16);
-	send_message(1, (int)(&fb + 0x40000000));
+	//enable_irq(arm_timer);
+	/*send_message(1, (int)(&fb + 0x40000000));
 	int status = recv_message(1).code;
 	if(status == 0) {
 		gpio_set(16);
@@ -28,5 +31,5 @@ void kmain() {
 				(*ptr)[2] = y;
 			}
 		}
-	}
+	}*/
 }

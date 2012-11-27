@@ -4,11 +4,13 @@
 .align(2)
 b _start
 	
+@Placed at 0x8000
 .section .init
 .align 2
 
 .global _start
 _start:
+@Set up stack.
 mov sp, #0x8000
 /*
 ldr r0,=0x20200000
