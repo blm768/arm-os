@@ -21,6 +21,7 @@ static inline void acknowledge_sys_timer(uint timer) {
 /////////////
 //CPU timer//
 /////////////
+//This code is probably broken.
 
 typedef enum {
 	large_counter = 1 << 1,
@@ -31,12 +32,27 @@ typedef enum {
 	halt_in_debug = 1 << 8,
 	enable_free_run = 1 << 9,
 	free_run_prescale_1 = 1 << 16,
+	prescale_reset = 0x3E0000,
 } CPUTimerControl;
 
-#define CPU_TIMER_COMPARE (*(uint*)0x2000B400)
-#define CPU_TIMER_VALUE   (*(uint*)0x2000B404)
-#define CPU_TIMER_CONTROL (*(CPUTimerControl*)0x2000B408)
-#define CPU_TIMER_ACK     (*(uint*)0X2000B40C)
+#define CPU_TIMER_SET     (*(volatile uint*)0x2000B400)
+#define CPU_TIMER_VALUE   (*(volatile uint*)0x2000B404)
+#define CPU_TIMER_CONTROL (*(volatile CPUTimerControl*)0x2000B408)
+#define CPU_TIMER_ACK     (*(volatile uint*)0x2000B40C)
+#define CPU_TIMER_STATUS  (*(volatile uint*)0x2000B410)
+#define CPU_TIMER_RESET   (*(volatile uint*)0x2000B418)
+#define CPU_TIMER_PREDIV  (*(volatile uint*)0x2000B41C)
+
+#define CPU_TIMER_PREDIV_RESET 249
+
+static inline void set_cpu_timer(uint value) {
+	CPU_TIMER_CONTROL = prescale_reset;
+	CPU_TIMER_SET = value;
+	CPU_TIMER_RESET = value;
+	CPU_TIMER_PREDIV = CPU_TIMER_PREDIV_RESET;
+	CPU_TIMER_ACK = 1;
+	CPU_TIMER_CONTROL = prescale_reset | large_counter | enable | enable_interrupt;
+}
 
 static inline void enable_cpu_timer() {
 	CPU_TIMER_CONTROL |= enable;

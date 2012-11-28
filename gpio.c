@@ -4,7 +4,7 @@ void gpio_set_output(uint pin) {
 	const uint offset = pin / 10;
 	const uint shift = (pin - 10 * offset) * 3;
 	const uint mask = ~(0b111 << shift);
-	uint* const ptr = GPIO_MODE + offset;
+	volatile uint* const ptr = GPIO_MODE + offset;
 	*ptr = (*ptr & mask) | (1 << shift);
 }
 

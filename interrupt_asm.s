@@ -14,6 +14,13 @@
 .global halt
 halt:
 	b halt
+	
+.global swi
+swi:
+	stmdb sp!, {lr}
+	swi 0
+	ldmia sp!, {lr}
+	mov pc, lr
 
 .global enable_irqs
 enable_irqs:
@@ -39,23 +46,30 @@ irq_handler:
 	mrs r0, spsr
 	
 	@Switch to system mode.
-	mrs r1, cpsr
-    bic r1, r1, #0xDF
+	/*mrs r1, cpsr
+	bic r1, r1, #0xDF
     orr r1, r1, #0x1F
-    msr cpsr, r1
+    msr cpsr, r1*/
 	
 	stmdb sp!, {r0, lr}
 	bl c_irq_handler
 	ldmia sp!, {r0, lr}
 	
 	@Return to IRQ mode.
-	mrs r1, cpsr
+	/*mrs r1, cpsr
     bic r1, r1, #0xDF
     orr r1, r1, #0x92
-    msr cpsr, r1
+    msr cpsr, r1*/
 	
 	@Restore spsr.
 	msr spsr, r0
+	movs pc, lr
+
+.global swi_handler
+swi_handler:
+	stmdb sp!, {r0-r12, lr}
+	bl c_swi_handler
+	ldmia sp!, {r0-r12, lr}
 	movs pc, lr
 	
 .global asm_interrupt_init
@@ -106,7 +120,7 @@ irq_disable = 0x7E00B21C
 .isrs:
 	.word _start
 	.word halt
-	.word halt
+	.word swi_handler
 	.word halt
 	.word halt
 	.word halt

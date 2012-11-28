@@ -34,11 +34,11 @@ static inline void send_message(int mBox, int msg) {
 	MAIL_SEND = mBox | msg;
 }
 
-static inline volatile int get_recv_status() {
+static inline int get_recv_status() {
 	return MAIL_STATUS & (1 << 29);
 }
 
-static inline volatile Message recv_message(int mBox) {
+static inline Message recv_message(int mBox) {
 	while(get_recv_status()) {}
 	//To do: check that this is the right mailbox.
 	Message msg = MAIL_RECV;

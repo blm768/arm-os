@@ -6,6 +6,8 @@
 
 typedef void(*ISR)();
 
+extern void swi();
+
 typedef struct {
 	ISR reset;
 	ISR undefined;
@@ -35,7 +37,7 @@ typedef enum {
 	spi = 54,
 	pcm = 55,
 	uart = 57,
-	arm_timer = 64,
+	cpu_timer = 64,
 	mailbox0,
 	doorbell0,
 	doorbell2,
@@ -52,12 +54,16 @@ extern void enable_irqs();
 extern void disable_irqs();
 
 static inline void enable_irq(IRQ irq) {
-	clear_word_and_set_bit(irq_enable, irq);
+	const size_t shift = irq & 31;
+	const size_t offset = irq >> 5;
+	irq_enable[offset] |= (1 << shift);
 }
 
 static inline void disable_irq(IRQ irq) {
 	clear_word_and_set_bit(irq_disable, irq);
 }
+
+extern void c_irq_handler();
 
 extern void asm_irq_init();
 static inline void irq_init() {
