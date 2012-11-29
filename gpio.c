@@ -12,7 +12,7 @@ void gpio_set(uint pin) {
 	//pin / 32
 	const uint offset = pin >> 5;
 	//pin % 32
-	const uint shift = pin & (32 - 1);
+	const uint shift = pin & 31;
 	GPIO_SET[offset] = 1 << shift;
 }
 

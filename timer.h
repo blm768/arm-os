@@ -51,7 +51,7 @@ static inline void set_cpu_timer(uint value) {
 	CPU_TIMER_RESET = value;
 	CPU_TIMER_PREDIV = CPU_TIMER_PREDIV_RESET;
 	CPU_TIMER_ACK = 1;
-	CPU_TIMER_CONTROL = prescale_reset | large_counter | enable | enable_interrupt;
+	CPU_TIMER_CONTROL = prescale_reset | large_counter;
 }
 
 static inline void enable_cpu_timer() {

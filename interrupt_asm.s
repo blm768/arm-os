@@ -96,17 +96,18 @@ asm_irq_init:
 .section .data
 .align 2
 
-INTERRUPT_BASE = 0x7E00B000
+INTERRUPT_BASE = 0x2000B000
 
-.global interrupt_pending
-interrupt_pending_special = 0x7E00B200
-interrupt_pending_normal =  0x7E00B204
+.global interrupt_pending_special
+interrupt_pending_special = 0x2000B200
+.global interrupt_pending_normal
+interrupt_pending_normal =  0x2000B204
 
 .global irq_enable
-irq_enable = 0x7E00B210
+irq_enable = 0x2000B210
 
 .global irq_disable
-irq_disable = 0x7E00B21C
+irq_disable = 0x2000B21C
 
 .ivt:
 	ldr pc, .isrs

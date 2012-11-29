@@ -11,6 +11,7 @@ b _start
 .global _start
 _start:
 	@Set up stack.
+	@To do: MOVE THIS! It's right on top of the interrupt stack.
 	mov sp, #0x8000
 	@Enter kmain.
 	bl kmain
