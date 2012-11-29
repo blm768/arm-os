@@ -22,7 +22,7 @@ SECTIONS {
 	* Next we put the data.
 	*/
 	.data : {
-		*(.data)
+		*(.data COMMON)
 	}
 
 	/*

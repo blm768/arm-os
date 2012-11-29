@@ -1,3 +1,4 @@
+#include "atags.h"
 #include "gpio.h"
 #include "graphics.h"
 #include "interrupt.h"
@@ -11,7 +12,8 @@ FramebufferInfo fb = {
 	0, 24,
 	0, 0};
 	
-void kmain() {
+void kmain(uint r0, uint system_type, AtagHeader* atags) {
+	process_atags(atags);
 	interrupt_init();
 	enable_irqs();
 	enable_irq(cpu_timer);

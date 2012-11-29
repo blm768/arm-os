@@ -51,9 +51,9 @@ irq_handler:
     orr r1, r1, #0x1F
     msr cpsr, r1*/
 	
-	stmdb sp!, {r0, lr}
+	stmdb sp!, {r0-r3, lr}
 	bl c_irq_handler
-	ldmia sp!, {r0, lr}
+	ldmia sp!, {r0-r3, lr}
 	
 	@Return to IRQ mode.
 	/*mrs r1, cpsr
@@ -67,9 +67,9 @@ irq_handler:
 
 .global swi_handler
 swi_handler:
-	stmdb sp!, {r0-r12, lr}
+	stmdb sp!, {r0-r3, lr}
 	bl c_swi_handler
-	ldmia sp!, {r0-r12, lr}
+	ldmia sp!, {r0-r3, lr}
 	movs pc, lr
 	
 .global asm_interrupt_init

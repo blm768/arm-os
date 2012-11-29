@@ -60,7 +60,9 @@ static inline void enable_irq(IRQ irq) {
 }
 
 static inline void disable_irq(IRQ irq) {
-	clear_word_and_set_bit(irq_disable, irq);
+	const size_t shift = irq & 31;
+	const size_t offset = irq >> 5;
+	irq_enable[offset] &= ~(1 << shift);
 }
 
 extern void c_irq_handler();
