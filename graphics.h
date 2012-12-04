@@ -12,8 +12,8 @@ typedef struct {
 	volatile int pitch;
 	int depth;
 	int x, y;
-	volatile color_rgb* buffer;
-	uint size;
+	color_rgb* volatile buffer;
+	volatile size_t size;
 } __attribute__((__aligned__(16))) FramebufferInfo;
 
 typedef struct {
