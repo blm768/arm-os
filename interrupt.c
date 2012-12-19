@@ -2,7 +2,7 @@
 #include "timer.h"
 
 void c_irq_handler() {
-	acknowledge_cpu_timer();
+	cpu_timer_ack();
 }
 
 void c_swi_handler() {

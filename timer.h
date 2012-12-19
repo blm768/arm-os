@@ -45,7 +45,7 @@ typedef enum {
 
 #define CPU_TIMER_PREDIV_RESET 249
 
-static inline void set_cpu_timer(uint value) {
+static inline void cpu_timer_set(uint value) {
 	CPU_TIMER_CONTROL = prescale_reset;
 	CPU_TIMER_SET = value;
 	CPU_TIMER_RESET = value;
@@ -54,17 +54,25 @@ static inline void set_cpu_timer(uint value) {
 	CPU_TIMER_CONTROL = prescale_reset | large_counter;
 }
 
-static inline void enable_cpu_timer() {
+static inline void cpu_timer_start() {
 	CPU_TIMER_CONTROL |= enable;
 }
 
+static inline void cpu_timer_stop() {
+	CPU_TIMER_CONTROL &= ~enable;
+}
+
 //Only enables interrupts on the timer side
-static inline void enable_cpu_timer_interrupt() {
+static inline void cpu_timer_enable_interrupt() {
 	CPU_TIMER_CONTROL |= enable_interrupt;
 }
 
-static inline void acknowledge_cpu_timer() {
+static inline void cpu_timer_ack() {
 	CPU_TIMER_ACK = 1;
+}
+
+static inline bool cpu_timer_done() {
+	return (bool)CPU_TIMER_STATUS;
 }
 
 #endif
