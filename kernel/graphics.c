@@ -27,7 +27,7 @@ void blit(Bitmap src, Bitmap dest, uint x, uint y) {
 	
 	for(size_t i = 0; i < hmin; ++i) {
 		for(size_t j = 0; j < wmin; ++j) {
-			dest.data[x + j + i * dest.width] = src.data[j + i * src.width];
+			byte_copy(dest.data + (x + j + i * dest.width), src.data + (j + i * src.width), 3);
 		}
 	}
 }

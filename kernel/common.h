@@ -12,4 +12,10 @@ typedef unsigned long ulong;
 
 extern void error(uint);
 
+static inline void byte_copy(void* src, void* dest, size_t num) {
+	for(size_t i = 0; i < num; ++i) {
+		((ubyte*)dest)[i] = ((ubyte*)src)[i];
+	}
+}
+
 #endif
