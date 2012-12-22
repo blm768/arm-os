@@ -5,7 +5,9 @@
 +/
 
 import std.c.stdlib;
+import std.conv;
 import std.stdio;
+import std.string;
 
 void usage_error() {
 	stderr.writeln("Usage: bmp2kfont file [width height]");
@@ -72,37 +74,73 @@ int main(string[] args) {
 		usage_error();
 	}
 	string filename = args[1];
+	size_t tileWidth, tileHeight;
+	if(args.length == 4) {
+		tileWidth = args[2].to!size_t;
+		tileHeight = args[3].to!size_t;
+	} else {
+		tileWidth = tileHeight = 8;
+	}
 	auto f = File(filename);
 	auto bmpHeader = rawRead!BmpHeader(f);
 	bmpHeader.validate();
 	auto dibHeader = rawRead!DibHeader(f);
-	writeln(f.tell());
-	writeln(BmpHeader.sizeof);
-	writeln(dibHeader);
 	dibHeader.validate();
 	f.seek(dibHeader.size - DibHeader.sizeof, SEEK_CUR);
-	writeln(f.tell());
-	writeln(bmpHeader.dataOffset);
 	size_t pixelSize = (dibHeader.bpp == 24) ? 3 : 4;
 	ubyte[] data = new ubyte[dibHeader.dataSize];
 	f.rawRead(data);
 	const width = dibHeader.width;
 	const height = dibHeader.height;
 	//Row width is rounded up to a multiple of 4.
-	size_t rowSize = width * pixelSize;
+	size_t rowSize = width * pixelSize;                                                            
 	if(rowSize & 0x3) {
-		rowSize += 1;
+		rowSize += 4;
 	}
 	rowSize &= ~0x3;
 	auto pixels = new Pixel[][height];
-	writeln(pixels.length);
 	for(size_t i = 0; i < height; ++i) {
 		Pixel[] row = pixels[height - 1 - i] = new Pixel[width];
 		for(size_t j = 0; j < width; ++j) {
 			size_t offset = i * rowSize + j * pixelSize;
-			row[j][] = data[offset .. offset + pixelSize];
+			row[j][] = data[offset .. offset + pixelSize].reverse;
 		}
 	}
-	writeln(pixels);
+	
+	size_t xTiles = width / tileWidth;
+	size_t yTiles = height / tileHeight;
+	
+	File hdr = File("font.h", "w");
+	hdr.write(
+`#ifndef _FONT_H
+#define _FONT_H
+
+#include "common.h"
+#include "graphics.h"
+
+#define FONT_WIDTH `, tileWidth, `
+#define FONT_HEIGHT `, tileHeight, `
+
+typedef Color FontTile[FONT_HEIGHT * FONT_WIDTH];
+
+Tile font_tiles[] = {
+`);
+	for(size_t ty = 0; ty < yTiles; ++ty) {
+		const yStart = ty * tileHeight;
+		for(size_t tx = 0; tx < xTiles; ++tx) {
+			const xStart = tx * tileWidth;
+			hdr.writeln("\t{");
+			for(size_t y = yStart; y < yStart + tileHeight; ++y) {
+				auto row = pixels[y][xStart .. xStart + tileWidth];
+				hdr.writeln("\t\t{", row.to!(string[]).join(","), "}");
+			}
+			hdr.writeln("\t}");
+		}
+	}
+	hdr.write(
+`}
+
+#endif
+`);
 	return 0;
 }
