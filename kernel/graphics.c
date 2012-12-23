@@ -11,23 +11,21 @@ Bitmap get_framebuffer(size_t width, size_t height) {
 	send_message(1, (uint)(&fb) + 0x40000000);
 	uint status = recv_message(1);
 	Bitmap bmp = {
-		NULL,
 		width,
-		height};
+		height,
+		NULL};
 	if(status == 0) {
-		while(!fb.buffer) {}
+		//while(!fb.buffer) {}
 		bmp.data = fb.buffer - 0x40000000;
 	}
 	return bmp;
 }
 
 void blit(Bitmap src, Bitmap dest, uint x, uint y) {
-	uint wmin = MIN(src.width, (dest.width - x));
-	uint hmin = MIN(src.height, (dest.height - y));
+	uint wmin = MIN(src.width, (uint)(dest.width - x));
+	uint hmin = MIN(src.height, (uint)(dest.height - y));
 	
 	for(size_t i = 0; i < hmin; ++i) {
-		for(size_t j = 0; j < wmin; ++j) {
-			byte_copy(dest.data + (x + j + i * dest.width), src.data + (j + i * src.width), 3);
-		}
+		byte_copy(dest.data + (x + (y + i) * dest.width), src.data + (i * src.width), wmin * sizeof(color_rgb));
 	}
 }

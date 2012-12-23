@@ -2,7 +2,7 @@
 
 #include "atags.h"
 #include "gpio.h"
-#include "graphics.h"
+#include "textcons.h"
 #include "interrupt.h"
 #include "timer.h"
 
@@ -20,11 +20,15 @@ void kmain(uint r0, uint system_type, AtagHeader* atags) {
 		color_rgb* buffer = fb.data;
 		for(size_t x = 0; x < fb.width; ++x) {
 			for(size_t y = 0; y < fb.height; ++y) {
-				color_rgb* ptr = (color_rgb*)buffer + (y * fb.width + x);
-				(*ptr)[0] = y;
-				(*ptr)[1] = y;
-				(*ptr)[2] = y;
+				color_rgb* ptr = buffer + (y * fb.width + x);
+				(*ptr)[0] = 255;
+				(*ptr)[1] = 255;
+				(*ptr)[2] = 255;
 			}
 		}
+		size_t a = 3;
+		if(fb.height == 480)
+			gpio_clear(16);
+		blit(glyph_for_char('A'), fb, 80, 80);
 	}
 }

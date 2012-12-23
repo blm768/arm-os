@@ -110,37 +110,30 @@ int main(string[] args) {
 	size_t xTiles = width / tileWidth;
 	size_t yTiles = height / tileHeight;
 	
-	File hdr = File("font.h", "w");
-	hdr.write(
-`#ifndef _FONT_H
-#define _FONT_H
+	File f2 = File("font.c", "w");
+	f2.write(
+`#include "font.h"
 
-#include "common.h"
-#include "graphics.h"
-
-#define FONT_WIDTH `, tileWidth, `
-#define FONT_HEIGHT `, tileHeight, `
-
-typedef Color FontTile[FONT_HEIGHT * FONT_WIDTH];
-
-Tile font_tiles[] = {
+FontTile font_tiles[] = {
 `);
 	for(size_t ty = 0; ty < yTiles; ++ty) {
 		const yStart = ty * tileHeight;
 		for(size_t tx = 0; tx < xTiles; ++tx) {
 			const xStart = tx * tileWidth;
-			hdr.writeln("\t{");
+			f2.writeln("\t{");
 			for(size_t y = yStart; y < yStart + tileHeight; ++y) {
 				auto row = pixels[y][xStart .. xStart + tileWidth];
-				hdr.writeln("\t\t{", row.to!(string[]).join(","), "}");
+				f2.write("\t\t");
+				foreach(Pixel p; row) {
+					foreach(ubyte v; p) {
+						f2.write(v, ",");
+					}
+				}
+				f2.writeln();
 			}
-			hdr.writeln("\t}");
+			f2.writeln("\t},");
 		}
 	}
-	hdr.write(
-`}
-
-#endif
-`);
+	f2.writeln(`};`);
 	return 0;
 }

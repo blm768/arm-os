@@ -11,8 +11,8 @@ typedef ubyte color_rgb[3];
 typedef ubyte color_rgba[4];
 
 typedef struct {
-	color_rgb* data;
 	uint width, height;
+	color_rgb* data;
 } Bitmap;
 
 typedef struct {
@@ -61,6 +61,7 @@ static inline int get_recv_status() {
 	return MAIL_STATUS & (1 << 30);
 }
 
+//To do: move.
 static inline void busy_wait(uint usecs) {
 	cpu_timer_set(usecs);
 	cpu_timer_start();
