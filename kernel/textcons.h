@@ -21,4 +21,18 @@ static inline Bitmap glyph_for_char(char c) {
 	return b;
 }
 
+typedef struct {
+	Bitmap fb;
+	uint width, height;
+} Console;
+
+extern Console console;
+
+static inline void init_console() {
+	//To do: remove magic constants
+	console.fb = get_framebuffer(720, 480);
+	console.width = console.fb.width / FONT_WIDTH;
+	console.height = console.fb.height / FONT_HEIGHT;
+}
+
 #endif
