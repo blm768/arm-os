@@ -3,8 +3,12 @@
 
 #include "common.h"
 
-char digit_to_char(uint digit, uint base);
+//Much like strncpy, but the terminating null is always included
+//The destination buffer should contain space for at least len + 1 characters.
+void string_copy(char* dest, char* src, size_t len);
 
-void uint_to_str(uint value, uint base);
+char digit_to_char(uint digit);
+
+void uint_to_str(uint value, uint base, char* buf);
 
 #endif

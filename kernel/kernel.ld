@@ -1,6 +1,7 @@
 /******************************************************************************
 *	kernel.ld
 *	 by Alex Chadwick
+*    Modified by Ben Merritt
 *
 *	A linker script for generation of raspberry pi kernel images.
 ******************************************************************************/
@@ -23,6 +24,10 @@ SECTIONS {
 	*/
 	.data : {
 		*(.data COMMON)
+	}
+	
+	.rodata : {
+		*(.rodata* COMMON)
 	}
 
 	/*

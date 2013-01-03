@@ -29,6 +29,7 @@ void kmain(uint r0, uint system_type, AtagHeader* atags) {
 		size_t a = 3;
 		if(fb.height == 480)
 			gpio_clear(16);
+		write("Test");
 		blit(glyph_for_char('A'), fb, 80, 80);
 	}
 }
