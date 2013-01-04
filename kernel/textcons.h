@@ -5,6 +5,7 @@
 
 #include "font.h"
 #include "graphics.h"
+#include "string.h"
 
 static inline size_t glyph_index_for_char(char c) {
 	if(c < '!') {
@@ -30,13 +31,17 @@ typedef struct {
 
 extern Console console;
 
-static inline void init_console() {
+static inline bool init_console() {
 	//To do: remove magic constants
 	console.fb = get_framebuffer(720, 480);
+	if(!console.fb.data) {
+		return false;
+	}
 	console.width = console.fb.width / FONT_WIDTH;
 	console.height = console.fb.height / FONT_HEIGHT;
 	console.cx = 0;
 	console.cy = 0;
+	return true;
 }
 
 static inline void write_char(char c) {
@@ -50,6 +55,30 @@ static inline void write_char(char c) {
 	}
 }
 
+static inline void write_newline() {
+	console.cx = 0;
+	if(console.cy < console.height - 1) {
+		++console.cy;
+	} else {
+		for(size_t y = 0; y < FONT_HEIGHT * (console.height - 1); ++y) {
+			
+		}
+	}
+}
+
 void write(char* str);
+
+static inline void write_uint(uint value) {
+	char buf[16];
+	uint_to_str(value, 10, buf);
+	write(buf);
+}
+
+static inline void write_ptr(void* value) {
+	char buf[16];
+	//To do: make this independent of word size!
+	uint_to_str((uint)value, 16, buf);
+	write(buf);
+}
 
 #endif
