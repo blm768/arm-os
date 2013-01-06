@@ -60,13 +60,18 @@ static inline void write_newline() {
 	if(console.cy < console.height - 1) {
 		++console.cy;
 	} else {
-		for(size_t y = 0; y < FONT_HEIGHT * (console.height - 1); ++y) {
-			
-		}
+		//Note: this is only guaranteed to work with the version of memcpy in common.h. It could also break if the resolution is extremely low.
+		size_t font_row_size = FONT_HEIGHT * console.fb.width;
+		memcpy(console.fb.data, console.fb.data + font_row_size, font_row_size * (console.height - 1) * sizeof(color_rgb));
 	}
 }
 
 void write(char* str);
+
+static inline void writeln(char* str) {
+	write(str);
+	write_newline();
+}
 
 static inline void write_uint(uint value) {
 	char buf[16];
@@ -79,6 +84,15 @@ static inline void write_ptr(void* value) {
 	//To do: make this independent of word size!
 	uint_to_str((uint)value, 16, buf);
 	write(buf);
+}
+
+static inline void die(char* msg) {
+	//To do: more reliable check?
+	if(console.width > 0) {
+		writeln("Fatal error:");
+		writeln(msg);
+	}
+	while(true) {}
 }
 
 #endif
