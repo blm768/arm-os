@@ -26,5 +26,8 @@ typedef struct {
 } RootPage;
 
 void* alloc_physical_page(size_t level);
+void free_physical_page(void* page, size_t level);
+
+void map_page(void* phys, void* virt, size_t level);
 
 #endif

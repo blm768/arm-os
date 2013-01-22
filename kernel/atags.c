@@ -3,14 +3,6 @@
 #include "memory.h"
 #include "textcons.h"
 
-size_t page_size;
-
-void process_core_atag(AtagCore* core) {
-	page_size = core->page_size;
-	write_uint(page_size);
-	write_newline();
-}
-
 void process_atags(AtagHeader* ptr) {
 	if(ptr->type != core) {
 		die("Invalid type for first ATAG (or ATAGs not present)");
@@ -21,14 +13,30 @@ void process_atags(AtagHeader* ptr) {
 	write("Root length: ");
 	write_uint(ptr->length);
 	write_newline();
-	process_core_atag((AtagCore*)(ptr + 1));
 	*(uint**)&ptr += ptr->length;
+	
+	size_t mem_chunk = 0;
 	while(ptr->type != none) {
 		write("Type: ");
 		write_uint(ptr->type);
 		write_newline();
 		switch(ptr->type) {
 			case mem:
+				if(mem_chunk < MAX_MEMORY_CHUNKS) {
+					AtagMem* mem = (AtagMem*)(ptr + 1);
+					MemoryChunk* chunk = mem_chunks + mem_chunk;
+					chunk->start = mem->start;
+					chunk->end = mem->end;
+					++mem_chunk;
+					write("Start: ");
+					write_ptr(chunk->start);
+					write_newline();
+					write("End: ");
+					write_ptr(chunk->end);
+					write_newline();
+				} else {
+					die("Unable to process ATAG_MEM; MAX_MEMORY_CHUNKS too low");
+				}
 				break;
 		}
 		*(uint**)&ptr += ptr->length;

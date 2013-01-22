@@ -39,3 +39,12 @@ void* alloc_physical_page(size_t level) {
 		return 0;
 	}
 }
+
+void free_physical_page(void* page, size_t level) {
+	if(level == 0) {
+		//To do: watermark deallocation?
+		RootPage* next_page = first_free_root_page;
+		((RootPage*)page)->next = next_page;
+		first_free_root_page = (RootPage*)page;
+	}
+}
