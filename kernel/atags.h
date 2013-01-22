@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+//To do: move?
+#define MAX_MEMORY_CHUNKS 1
+
 typedef enum {
 	none = 0,
 	core = 0x54410001,

@@ -21,7 +21,6 @@ static inline void acknowledge_sys_timer(uint timer) {
 /////////////
 //CPU timer//
 /////////////
-//This code is probably broken.
 
 typedef enum {
 	large_counter = 1 << 1,
@@ -43,13 +42,13 @@ typedef enum {
 #define CPU_TIMER_RESET   (*(volatile uint*)0x2000B418)
 #define CPU_TIMER_PREDIV  (*(volatile uint*)0x2000B41C)
 
-#define CPU_TIMER_PREDIV_RESET 249
+#define CPU_TIMER_PREDIV_DEFAULT 249
 
 static inline void cpu_timer_set(uint value) {
 	CPU_TIMER_CONTROL = prescale_reset;
 	CPU_TIMER_SET = value;
 	CPU_TIMER_RESET = value;
-	CPU_TIMER_PREDIV = CPU_TIMER_PREDIV_RESET;
+	CPU_TIMER_PREDIV = CPU_TIMER_PREDIV_DEFAULT;
 	CPU_TIMER_ACK = 1;
 	CPU_TIMER_CONTROL = prescale_reset | large_counter;
 }

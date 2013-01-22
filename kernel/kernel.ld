@@ -21,9 +21,11 @@ SECTIONS {
 	
 	/* 
 	* Next we put the data.
+	*
+	* To do: move .bss?
 	*/
 	.data : {
-		*(.data COMMON)
+		*(.data .bss COMMON)
 	}
 	
 	.rodata : {

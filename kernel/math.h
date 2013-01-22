@@ -7,6 +7,18 @@ typedef struct {
 	uint quotient, remainder;
 } UintDivMod;
 
+static inline size_t round_down(size_t val, size_t mul) {
+	return val & (~mul);
+}
+
+static inline size_t round_up(size_t val, size_t mul) {
+	size_t result =  val & (~mul);
+	if(val & mul) {
+		result += mul;
+	}
+	return result;
+}
+
 //To do: use more efficient algorithm?
 static inline UintDivMod uintDivMod(uint a, uint b) {
 	UintDivMod div = {0, 0};

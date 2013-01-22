@@ -1,9 +1,11 @@
 #include "graphics.h"
 #include "math.h"
 
+#define V_OFFSET 10
+
 Bitmap get_framebuffer(size_t width, size_t height) {
 	FramebufferInfo fb = {
-		width, height,
+		width - 2 * V_OFFSET, height - 2 * V_OFFSET,
 		width, height,
 		0, 24,
 		0, 0,
