@@ -10,15 +10,14 @@ void process_atags(AtagHeader* ptr) {
 	if(ptr->length <= 2) {
 		die("Invalid length for ATAG_CORE");
 	}
-	write("Root length: ");
 	write_uint(ptr->length);
 	write_newline();
 	*(uint**)&ptr += ptr->length;
 	
 	size_t mem_chunk = 0;
 	while(ptr->type != none) {
-		write("Type: ");
-		write_uint(ptr->type);
+		write("Length: ");
+		write_uint(ptr->length);
 		write_newline();
 		switch(ptr->type) {
 			case mem:
@@ -26,7 +25,7 @@ void process_atags(AtagHeader* ptr) {
 					AtagMem* mem = (AtagMem*)(ptr + 1);
 					MemoryChunk* chunk = mem_chunks + mem_chunk;
 					chunk->start = mem->start;
-					chunk->end = mem->end;
+					chunk->end = mem->start + mem->size;
 					++mem_chunk;
 					write("Start: ");
 					write_ptr(chunk->start);

@@ -33,8 +33,8 @@ typedef struct {
 extern size_t page_size;
 
 typedef struct {
+	size_t size;
 	void* start;
-	void* end;
 } AtagMem;
 
 void process_atags(AtagHeader* ptr);

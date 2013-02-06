@@ -1,41 +1,29 @@
-/******************************************************************************
-*	kernel.ld
-*	 by Alex Chadwick
-*    Modified by Ben Merritt
-*
-*	A linker script for generation of raspberry pi kernel images.
-******************************************************************************/
+/*
+ * Based on Alex Chadwick's linkscript
+ */
 
 SECTIONS {
-	/* 
-	* We allow room for the ATAGs and the stack and then start our code at
-	* 0x8000.
-	*/
-	.init 0x8000 : {
+	. = 0xC008000;
+	
+	.init : AT(ADDR(.init) - 0xC000000) {
 		*(.init)
 	}
 
-	.text : {
+	.text : AT(ADDR(.text) - 0xC000000) {
 		*(.text)
 	}
 	
 	/* 
-	* Next we put the data.
-	*
-	* To do: move .bss?
-	*/
-	.data : {
+	 * To do: move .bss?
+	 */
+	.data : AT(ADDR(.data) - 0xC000000) {
 		*(.data .bss COMMON)
 	}
 	
-	.rodata : {
+	.rodata : AT(ADDR(.rodata) - 0xC000000) {
 		*(.rodata* COMMON)
 	}
 
-	/*
-	* Finally comes everything else. A fun trick here is to put all other 
-	* sections into this section, which will be discarded by default.
-	*/
 	/DISCARD/ : {
 		*(*)
 	}
