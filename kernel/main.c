@@ -11,7 +11,6 @@
 //To do: peripheral read/write barriers!
 
 void kmain(uint r0, uint system_type, AtagHeader* atags) {
-	return;
 	gpio_set_output(16);
 	gpio_set(16);
 	gpio_clear(16);
