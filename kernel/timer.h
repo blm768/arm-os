@@ -3,9 +3,11 @@
 
 #include "common.h"
 
-#define SYS_TIMER_CONTROL (*(uint*)0x20003000)
-#define SYS_TIMER_VALUE   (*(ulong*)0x20003004)
-#define SYS_TIMER_COMPARE (*(uint*)0x2000300C)
+#include "memdef.h"
+
+#define SYS_TIMER_CONTROL (*(uint*) (IO_BASE + 0x3000))
+#define SYS_TIMER_VALUE   (*(ulong*)(IO_BASE + 0x3004))
+#define SYS_TIMER_COMPARE (*(uint*) (IO_BASE + 0x300C))
 
 #define SYS_TICKS_PER_SEC 1000000000
 
@@ -34,13 +36,13 @@ typedef enum {
 	prescale_reset = 0x3E0000,
 } CPUTimerControl;
 
-#define CPU_TIMER_SET     (*(volatile uint*)0x2000B400)
-#define CPU_TIMER_VALUE   (*(volatile uint*)0x2000B404)
-#define CPU_TIMER_CONTROL (*(volatile CPUTimerControl*)0x2000B408)
-#define CPU_TIMER_ACK     (*(volatile uint*)0x2000B40C)
-#define CPU_TIMER_STATUS  (*(volatile uint*)0x2000B410)
-#define CPU_TIMER_RESET   (*(volatile uint*)0x2000B418)
-#define CPU_TIMER_PREDIV  (*(volatile uint*)0x2000B41C)
+#define CPU_TIMER_SET     (*(volatile uint*)(IO_BASE + 0xB400))
+#define CPU_TIMER_VALUE   (*(volatile uint*)(IO_BASE + 0xB404))
+#define CPU_TIMER_CONTROL (*(volatile CPUTimerControl*)(IO_BASE + 0xB408))
+#define CPU_TIMER_ACK     (*(volatile uint*)(IO_BASE + 0xB40C))
+#define CPU_TIMER_STATUS  (*(volatile uint*)(IO_BASE + 0xB410))
+#define CPU_TIMER_RESET   (*(volatile uint*)(IO_BASE + 0xB418))
+#define CPU_TIMER_PREDIV  (*(volatile uint*)(IO_BASE + 0xB41C))
 
 #define CPU_TIMER_PREDIV_DEFAULT 249
 

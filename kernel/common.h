@@ -26,7 +26,4 @@ static inline void* memcpy(void* dest, const void* src, size_t num) {
 	return dest;
 }
 
-//To do: move?
-#define IO_BASE 0xF2000000
-
 #endif

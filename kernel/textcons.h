@@ -45,24 +45,28 @@ static inline bool init_console() {
 }
 
 static inline void write_char(char c) {
-	blit(glyph_for_char(c), console.fb, console.cx * FONT_WIDTH, console.cy * FONT_HEIGHT);
-	++console.cx;
-	if(console.cx >= console.width) {
-		console.cx = 0;
-		if(console.cy < console.height - 1) {
-			++console.cy;
+	if(console.fb.data) {
+		blit(glyph_for_char(c), console.fb, console.cx * FONT_WIDTH, console.cy * FONT_HEIGHT);
+		++console.cx;
+		if(console.cx >= console.width) {
+			console.cx = 0;
+			if(console.cy < console.height - 1) {
+				++console.cy;
+			}
 		}
 	}
 }
 
 static inline void write_newline() {
-	console.cx = 0;
-	if(console.cy < console.height - 1) {
-		++console.cy;
-	} else {
-		//Note: this is only guaranteed to work with the version of memcpy in common.h. It could also break if the resolution is extremely low.
-		size_t font_row_size = FONT_HEIGHT * console.fb.width;
-		memcpy(console.fb.data, console.fb.data + font_row_size, font_row_size * (console.height - 1) * sizeof(color_rgb));
+	if(console.fb.data) {
+		console.cx = 0;
+		if(console.cy < console.height - 1) {
+			++console.cy;
+		} else {
+			//Note: this is only guaranteed to work with the version of memcpy in common.h. It could also break if the resolution is extremely low.
+			size_t font_row_size = FONT_HEIGHT * console.fb.width;
+			memcpy(console.fb.data, console.fb.data + font_row_size, font_row_size * (console.height - 1) * sizeof(color_rgb));
+		}
 	}
 }
 

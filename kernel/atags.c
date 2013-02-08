@@ -21,18 +21,24 @@ void process_atags(AtagHeader* ptr) {
 		write_newline();
 		switch(ptr->type) {
 			case mem:
+				//Note: this _might_ not be accurate on all systems.
 				if(mem_chunk < MAX_MEMORY_CHUNKS) {
 					AtagMem* mem = (AtagMem*)(ptr + 1);
-					MemoryChunk* chunk = mem_chunks + mem_chunk;
+					MemoryChunk* chunk;
 					chunk->start = mem->start;
 					chunk->end = mem->start + mem->size;
-					++mem_chunk;
-					write("Start: ");
-					write_ptr(chunk->start);
-					write_newline();
-					write("End: ");
-					write_ptr(chunk->end);
-					write_newline();
+					//Clip the chunk against the kernel.
+					if(chunk->start >= KERNEL_PAGE_START && chunk->start < KERNEL_PAGE_END) {
+						chunk->start = KERNEL_PAGE_END;
+					}
+					if(chunk->end > KERNEL_PAGE_START && chunk->end <= KERNEL_PAGE_END) {
+						chunk->end = KERNEL_PAGE_START;
+					}
+					//If we still have a chunk, save it.
+					if(chunk->start < chunk->end) {
+						mem_chunks[mem_chunk] = chunk;
+						++mem_chunk;
+					}
 				} else {
 					die("Unable to process ATAG_MEM; MAX_MEMORY_CHUNKS too low");
 				}

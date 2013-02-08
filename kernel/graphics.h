@@ -3,9 +3,9 @@
 
 #include "common.h"
 
-#include "timer.h"
-
 #include "barrier.h"
+#include "memdef.h"
+#include "timer.h"
 
 typedef ubyte color_rgb[3];
 typedef ubyte color_rgba[4];
@@ -42,10 +42,10 @@ typdedef struct {
 } Mailbox;
 */
 
-#define MAIL_RECV   (*(volatile uint*)0x2000B880)
-#define MAIL_PEEK   (*(volatile uint*)0x2000B890)
-#define MAIL_SEND   (*(volatile uint*)0x2000B8A0)
-#define MAIL_STATUS (*(volatile uint*)0x2000B898)
+#define MAIL_RECV   (*(volatile uint*)(IO_BASE + 0xB880))
+#define MAIL_PEEK   (*(volatile uint*)(IO_BASE + 0xB890))
+#define MAIL_SEND   (*(volatile uint*)(IO_BASE + 0xB8A0))
+#define MAIL_STATUS (*(volatile uint*)(IO_BASE + 0xB898))
 
 static inline volatile int get_send_status() {
 	return MAIL_STATUS & (1 << 31);

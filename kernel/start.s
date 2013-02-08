@@ -37,7 +37,7 @@ _start:
 
 	@Map the I/O area. (0x20000000 phys. => 0xF2000000 virt.)
 	@To do: map fewer pages.
-	mov r0, #224
+	mov r0, #112
 	ldr r1, =0x20000002
 	ldr r2, =(.p_root_page_table + ((4096 - 224) * 4))
 	.map_io:
@@ -46,7 +46,18 @@ _start:
 		add r2, r2, #4
 		subs r0, #1
 		bne .map_io
-
+	
+	@Map the cache-coherent I/O area. (0x60000000 phys. => 0xF2000000 virt.)
+	@To do: map fewer pages.
+	mov r0, #112
+	ldr r1, =0x60000002
+	ldr r2, =(.p_root_page_table + ((4096 - 112) * 4))
+	.map_io_cc:
+		str r1, [r2]
+		add r1, r1, #0x100000
+		add r2, r2, #4
+		subs r0, #1
+		bne .map_io
 	
 	@Set domain 0 to have no access restrictions.
 	mov r0, #0x3

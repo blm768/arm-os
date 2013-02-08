@@ -3,13 +3,14 @@
 
 #include "common.h"
 
-#define PAGE_LEVELS 4
+#include "memdef.h"
+#include "memory.h"
 
 //To do: verify.
 #define SECTION_CACHEABLE 1 << 3
 #define SECTION_BUFFERABLE 1 << 2
 
-#define ENTRY_TYPE_SECTION 0b10;
+#define ENTRY_TYPE_SECTION 0b10
 
 typedef struct {
 	void* ptr;

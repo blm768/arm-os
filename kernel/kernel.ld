@@ -3,6 +3,8 @@
  */
 
 SECTIONS {
+	kernel_start = 0xC0000000;
+	kernel_base  = 0xC0000000;
 	. = 0xC008000;
 	
 	.init : AT(ADDR(.init) - 0xC000000) {
@@ -23,6 +25,8 @@ SECTIONS {
 	.rodata : AT(ADDR(.rodata) - 0xC000000) {
 		*(.rodata* COMMON)
 	}
+	
+	kernel_end = .;
 
 	/DISCARD/ : {
 		*(*)

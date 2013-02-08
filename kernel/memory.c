@@ -2,7 +2,7 @@
 
 #include "math.h"
 
-MemoryChunk mem_chunks[MAX_MEMORY_CHUNKS];
+MemoryChunk mem_chunks[MAX_MEMORY_CHUNKS] = {{0, 0, 0}};
 RootPage* first_free_root_page = NULL;
 
 void init_page_allocators() {

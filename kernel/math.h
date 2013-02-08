@@ -7,12 +7,15 @@ typedef struct {
 	uint quotient, remainder;
 } UintDivMod;
 
+//To do: rename?
+//Only works when mul is a power of 2
 static inline size_t round_down(size_t val, size_t mul) {
-	return val & (~mul);
+	return val & ~(mul - 1);
 }
 
+//Only works when mul is a power of 2
 static inline size_t round_up(size_t val, size_t mul) {
-	size_t result =  val & (~mul);
+	size_t result =  val & ~(mul - 1);
 	if(val & mul) {
 		result += mul;
 	}
