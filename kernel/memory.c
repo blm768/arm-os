@@ -5,17 +5,19 @@
 MemoryChunk mem_chunks[MAX_MEMORY_CHUNKS] = {{0, 0, 0}};
 RootPage* first_free_root_page = NULL;
 
+void* heap_watermark = HEAP_START;
+
 void init_page_allocators() {
 	//For now, memory chunks are rounded to the nearest root-level page.
 	for(size_t i = 0; i < MAX_MEMORY_CHUNKS; ++i) {
 		MemoryChunk* chunk = mem_chunks + i;
-		chunk->start = (void*)round_up((size_t)chunk->start, page_sizes[0]);
-		chunk->end = (void*)round_down((size_t)chunk->end, page_sizes[0]);
+		chunk->start = (void*)p2_round_up((size_t)chunk->start, page_sizes[0]);
+		chunk->end = (void*)p2_round_down((size_t)chunk->end, page_sizes[0]);
 		chunk->free_start = chunk->start;
 	}
 }
 
-void* alloc_physical_page(size_t level) {
+void* alloc_phys_page(size_t level) {
 	if(level == 0) {
 		if(first_free_root_page) {
 			RootPage* page = first_free_root_page;
@@ -32,11 +34,11 @@ void* alloc_physical_page(size_t level) {
 				}
 			}
 			//If we reach this, there are no root pages left.
-			return 0;
+			return NULL;
 		}
 	} else {
 		//To do: implement.
-		return 0;
+		return NULL;
 	}
 }
 
@@ -47,4 +49,14 @@ void free_physical_page(void* page, size_t level) {
 		((RootPage*)page)->next = next_page;
 		first_free_root_page = (RootPage*)page;
 	}
+}
+
+void* alloc_virt_pages(size_t size) {
+	size = p2_round_up(size, page_sizes[PAGE_LEVELS - 1]);
+	if((size_t)(HEAP_END - heap_watermark) <= size) {
+		void* result = heap_watermark;
+		heap_watermark += size;
+		return result;
+	}
+	return NULL;
 }

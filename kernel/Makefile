@@ -1,4 +1,4 @@
-CFLAGS := --std=gnu99 -g -O2
+CFLAGS := --std=gnu99 -g -O2 -Wall
 
 ifeq ($(USE_QEMU), true)
 	LINKSCRIPT := kernel_qemu.ld

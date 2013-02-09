@@ -1,7 +1,7 @@
 #include "memdef.h"
 
 const size_t page_sizes[] = {
-	1024 * 1024,
+	PAGE_SIZE_0,
 	64 * 1024,
 	4 * 1024,
 	1024,
@@ -12,5 +12,5 @@ const size_t page_powers[] = {
 	20,
 	16,
 	12,
-	10,
+	PAGE_POWER_MIN,
 };

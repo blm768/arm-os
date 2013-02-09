@@ -23,17 +23,20 @@ typedef struct {
 	void* next;
 } RootPage;
 
-typedef struct VirtualPage {
-	struct VirtualPage* next_free;
-} VirtualPage;
+typedef struct AllocChunk {
+	struct AllocChunk* next_free;
+} AllocChunk;
 
-void* alloc_physical_page(size_t level);
-void free_physical_page(void* page, size_t level);
+void* virt_to_phys(void* virt);
 
-void* alloc_virtual_pages(size_t size);
-void* free_virtual_pages(void* pages);
+void* alloc_phys_page(size_t level);
+void free_phys_page(void* page, size_t level);
+
+void* alloc_virt_pages(size_t size);
+void* free_virt_pages(void* pages);
 
 void map_page(void* phys, void* virt, size_t level);
+void subdivide_page(void* phys);
 
 //To do: error checking.
 /*

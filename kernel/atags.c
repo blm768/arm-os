@@ -24,18 +24,18 @@ void process_atags(AtagHeader* ptr) {
 				//Note: this _might_ not be accurate on all systems.
 				if(mem_chunk < MAX_MEMORY_CHUNKS) {
 					AtagMem* mem = (AtagMem*)(ptr + 1);
-					MemoryChunk* chunk;
-					chunk->start = mem->start;
-					chunk->end = mem->start + mem->size;
+					MemoryChunk chunk;
+					chunk.start = mem->start;
+					chunk.end = mem->start + mem->size;
 					//Clip the chunk against the kernel.
-					if(chunk->start >= KERNEL_PAGE_START && chunk->start < KERNEL_PAGE_END) {
-						chunk->start = KERNEL_PAGE_END;
+					if(chunk.start >= KERNEL_PAGE_START && chunk.start < KERNEL_PAGE_END) {
+						chunk.start = KERNEL_PAGE_END;
 					}
-					if(chunk->end > KERNEL_PAGE_START && chunk->end <= KERNEL_PAGE_END) {
-						chunk->end = KERNEL_PAGE_START;
+					if(chunk.end > KERNEL_PAGE_START && chunk.end <= KERNEL_PAGE_END) {
+						chunk.end = KERNEL_PAGE_START;
 					}
 					//If we still have a chunk, save it.
-					if(chunk->start < chunk->end) {
+					if(chunk.start < chunk.end) {
 						mem_chunks[mem_chunk] = chunk;
 						++mem_chunk;
 					}

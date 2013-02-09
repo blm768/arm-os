@@ -25,7 +25,7 @@ _start:
 	
 	@Map the higher "half".
 	mov r0, #8
-	ldr r1, =0x2
+	ldr r1, =0x12
 	@This corresponds to the physical address 0xC0000000.
 	ldr r2, =(.p_root_page_table + ((4096 - 1024) * 4))
 	.map_upper:
@@ -38,7 +38,7 @@ _start:
 	@Map the I/O area. (0x20000000 phys. => 0xF2000000 virt.)
 	@To do: map fewer pages.
 	mov r0, #112
-	ldr r1, =0x20000002
+	ldr r1, =0x20000012
 	ldr r2, =(.p_root_page_table + ((4096 - 224) * 4))
 	.map_io:
 		str r1, [r2]
@@ -48,9 +48,9 @@ _start:
 		bne .map_io
 	
 	@Map the cache-coherent I/O area. (0x60000000 phys. => 0xF2000000 virt.)
-	@To do: map fewer pages.
+	@To do: remove?
 	mov r0, #112
-	ldr r1, =0x60000002
+	ldr r1, =0x60000012
 	ldr r2, =(.p_root_page_table + ((4096 - 112) * 4))
 	.map_io_cc:
 		str r1, [r2]

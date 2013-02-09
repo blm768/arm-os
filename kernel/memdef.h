@@ -3,7 +3,13 @@
 
 #include "common.h"
 
+#include "math.h"
+
 #define PAGE_LEVELS 4
+
+#define PAGE_SIZE_0 (1024 * 1024)
+
+#define PAGE_POWER_MIN 10
 
 //Available page sizes on the machine
 extern const size_t page_sizes[PAGE_LEVELS];
@@ -20,12 +26,14 @@ extern void* kernel_end;
 extern void* kernel_base;
 
 //To do: use smaller pages?
-//Rounded down to the nearest page
-#define KERNEL_PAGE_START (kernel_start - (kernel_start % page_sizes[0]))
+#define KERNEL_PAGE_START (void*)ROUND_DOWN((size_t)kernel_start, PAGE_SIZE_0)
 //Rounded up to the nearest page
-#define KERNEL_PAGE_END   (kernel_end - (kernel_end % page_sizes[0]) + ((kernel_end % page_sizes[0]) ? page_powers[0] : 0))
+#define KERNEL_PAGE_END (void*)ROUND_UP((size_t)kernel_end, PAGE_SIZE_0)
 
 #define KERNEL_PHYS_START ((void*)(KERNEL_PAGE_START - kernel_base))
 #define KERNEL_PHYS_END   ((void*)(KERNEL_PAGE_END   - kernel_base))
+
+#define HEAP_START ((void*)0xC8000000)
+#define HEAP_END   ((void*)IO_BASE)
 
 #endif
