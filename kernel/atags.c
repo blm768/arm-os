@@ -1,5 +1,6 @@
 #include "atags.h"
 
+#include "math.h"
 #include "memory.h"
 #include "textcons.h"
 
@@ -34,6 +35,7 @@ void process_atags(AtagHeader* ptr) {
 					if(chunk.end > KERNEL_PAGE_START && chunk.end <= KERNEL_PAGE_END) {
 						chunk.end = KERNEL_PAGE_START;
 					}
+					//To do: handle issues where physical memory extends beyond what kernel is compiled to map.
 					//If we still have a chunk, save it.
 					if(chunk.start < chunk.end) {
 						mem_chunks[mem_chunk] = chunk;

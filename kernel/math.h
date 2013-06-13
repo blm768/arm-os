@@ -17,8 +17,9 @@ static inline size_t p2_round_down(size_t val, size_t mul) {
 }
 
 static inline size_t p2_round_up(size_t val, size_t mul) {
-	size_t result =  val & ~(mul - 1);
-	if(val & mul) {
+	size_t mask = mul - 1;
+	size_t result =  val & ~mask;
+	if(val & mask) {
 		result += mul;
 	}
 	return result;
@@ -33,6 +34,7 @@ static inline size_t lsr_round_up(size_t val, size_t pow) {
 }
 
 //To do: use more efficient algorithm?
+//To do: rename?
 static inline UintDivMod uintDivMod(uint a, uint b) {
 	UintDivMod div = {0, 0};
 	//To do: better error handling?

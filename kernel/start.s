@@ -5,6 +5,9 @@
 @The bootloader puts root_page_table at this physical address.
 .equ .p_root_page_table, (root_page_table - 0xC000000)
 
+@Note: must be synchronized with memdef.h
+.equ num_phys_pages, 256
+
 .global _start
 _start:
 	@Set up stack.
@@ -16,8 +19,15 @@ _start:
 	@Set up paging:
 	
 	@Inform the MMU of the root page table's location.
+	@TTBR1 is used for the kernel page table.
 	ldr r0, =.p_root_page_table
 	mcr p15, 0, r0, c2, c0, 0
+	mcr p15, 0, r0, c2, c0, 1
+	@Set TTBCR so addresses above 0x80000000 are mapped using TTBR1:
+	mrc p15, 0, r0, c2, c0, 2
+	bic r0, #7
+	orr r0, #1
+	@mcr p15, 0, r0, c2, c0, 2
 
 	@Identity map the first 1MB.
 	mov r1, #0x2
@@ -25,7 +35,7 @@ _start:
 	
 	@Map the higher "half".
 	mov r0, #8
-	ldr r1, =0x12
+	mov r1, #0x12
 	@This corresponds to the physical address 0xC0000000.
 	ldr r2, =(.p_root_page_table + ((4096 - 1024) * 4))
 	.map_upper:
@@ -34,30 +44,23 @@ _start:
 		add r2, r2, #4
 		subs r0, #1
 		bne .map_upper
-
-	@Map the I/O area. (0x20000000 phys. => 0xF2000000 virt.)
-	@To do: map fewer pages.
-	mov r0, #112
-	ldr r1, =0x20000012
-	ldr r2, =(.p_root_page_table + ((4096 - 224) * 4))
-	.map_io:
-		str r1, [r2]
-		add r1, r1, #0x100000
-		add r2, r2, #4
-		subs r0, #1
-		bne .map_io
 	
-	@Map the cache-coherent I/O area. (0x60000000 phys. => 0xF2000000 virt.)
-	@To do: remove?
-	mov r0, #112
-	ldr r1, =0x60000012
-	ldr r2, =(.p_root_page_table + ((4096 - 112) * 4))
-	.map_io_cc:
+	@Map the physical memory area.
+	mov r0, #num_phys_pages
+	mov r1, #0x12
+	ldr r2, =(.p_root_page_table + (4096 - num_phys_pages) * 4)
+	.map_phys:
 		str r1, [r2]
 		add r1, r1, #0x100000
 		add r2, r2, #4
 		subs r0, #1
-		bne .map_io
+		bne .map_phys
+	
+
+	@Map the I/O area. (0x20000000 phys)
+	ldr r1, =0x20000012
+	ldr r2, =(.p_root_page_table + ((4096 - num_phys_pages - 1) * 4))
+	str r1, [r2]
 	
 	@Set domain 0 to have no access restrictions.
 	mov r0, #0x3

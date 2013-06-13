@@ -1,7 +1,7 @@
 #ifndef _GRAPHICS_H
 #define _GRAPHICS_H
 
-#include "common.h"
+#include "../../common.h"
 
 #include "barrier.h"
 #include "memdef.h"
@@ -29,18 +29,6 @@ typedef struct {
 	uint box: 4;
 	uint code: 28;
 } Message;
-
-/*
-typdedef struct {
-	volatile Message send;
-	uint padding[3];
-	volatile Message peek;
-	volatile uint sender;
-	volatile uint status;
-	volatile uint config;
-	volatile uint send;
-} Mailbox;
-*/
 
 #define MAIL_RECV   (*(volatile uint*)(IO_BASE + 0xB880))
 #define MAIL_PEEK   (*(volatile uint*)(IO_BASE + 0xB890))

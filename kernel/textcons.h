@@ -4,7 +4,7 @@
 #include "common.h"
 
 #include "font.h"
-#include "graphics.h"
+#include "platform/current/graphics.h"
 #include "string.h"
 
 static inline size_t glyph_index_for_char(char c) {

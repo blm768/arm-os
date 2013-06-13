@@ -14,3 +14,4 @@ const size_t page_powers[] = {
 	12,
 	PAGE_POWER_MIN,
 };
+

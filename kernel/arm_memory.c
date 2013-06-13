@@ -19,9 +19,14 @@ void* virt_to_phys(void* virt) {
 //Declared in memory.h
 //To do: allow for other levels.
 //To do: validation?
-void map_page(void* phys, void* virt, size_t level) {
+void map_pages(void* phys, void* virt, size_t count) {
 	PageEntry* entry = root_page_table + ((size_t)phys >> page_powers[0]);
-	if(level == 0) {
+	while(count > 0) {
+	//if((count % !(phys & ~ADDRESS_MASK_SECTION)) {
 		entry->ptr = (void*)((size_t)virt | ENTRY_HIGH_BIT | ENTRY_TYPE_SECTION);
+		virt += page_sizes[0];
+		entry += 1;
+		--count;
+	//}
 	}
 }

@@ -2,7 +2,7 @@
 #define _FONT_H
 
 #include "common.h"
-#include "graphics.h"
+#include "platform/current/graphics.h"
 
 #define FONT_WIDTH 16
 #define FONT_HEIGHT 16

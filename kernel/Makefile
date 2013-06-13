@@ -1,15 +1,11 @@
 CFLAGS := --std=gnu99 -g -O2 -Wall
 
-ifeq ($(USE_QEMU), true)
-	LINKSCRIPT := kernel_qemu.ld
-else
-	LINKSCRIPT := kernel.ld
-endif
+find_files = $(wildcard $1) $(shell find platform/current -iname '$1')
 
-C_SRC := $(shell find . -iname '*.c')
-C_H := $(shell find . -iname '*.h')
+C_SRC := $(call find_files,*.c)
+C_H := $(call find_files,*.h)
 C_OBJ := $(C_SRC:%.c=%.o)
-ASM_SRC := $(shell find . -iname '*.s')
+ASM_SRC := $(call find_files,*.s)
 ASM_OBJ := $(ASM_SRC:%.s=%.o)
 OBJS := $(C_OBJ) $(ASM_OBJ)
 
@@ -17,10 +13,17 @@ kernel.img: kernel.elf
 	arm-none-eabi-objcopy $< -O binary $@ 
 
 kernel.elf: $(OBJS)
-	arm-none-eabi-ld $^ -o $@ -T $(LINKSCRIPT)
+	echo $(call find_files,*.c)
+	arm-none-eabi-ld $^ -o $@ -T platform/current/kernel.ld
 	
 $(C_OBJ): %.o : %.c $(C_H)
 	arm-none-eabi-gcc $(CFLAGS) -c $< -o $@
 
 $(ASM_OBJ): %.o: %.s
 	arm-none-eabi-as $< -o $@
+
+.PHONY: clean
+
+clean:
+	rm -rf obj kernel.img kernel.elf $(shell find -iname '*.o')
+

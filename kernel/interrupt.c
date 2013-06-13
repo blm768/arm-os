@@ -1,5 +1,5 @@
 #include "interrupt.h"
-#include "timer.h"
+#include "platform/current/timer.h"
 
 void c_irq_handler() {
 	cpu_timer_ack();

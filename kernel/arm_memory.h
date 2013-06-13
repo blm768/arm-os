@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-#include "memdef.h"
+#include "platform/current/memdef.h"
 #include "memory.h"
 
 //To do: verify.
