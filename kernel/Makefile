@@ -8,24 +8,24 @@ OBJCOPY := $(CC_PREFIX)-objcopy
 
 find_files = $(wildcard $1) $(shell find platform/current -iname '$1')
 
-C_SRC := $(call find_files,*.c)
-C_H := $(call find_files,*.h)
-C_OBJ := $(C_SRC:%.c=%.o)
-ASM_SRC := $(call find_files,*.s)
-ASM_OBJ := $(ASM_SRC:%.s=%.o)
-OBJS := $(C_OBJ) $(ASM_OBJ)
+c_src := $(call find_files,*.c)
+c_h := $(call find_files,*.h)
+c_obj := $(c_src:%.c=%.o)
+asm_src := $(call find_files,*.s)
+asm_obj := $(asm_src:%.s=%.o)
+objs := $(c_obj) $(asm_obj)
 
 kernel.img: kernel.elf
 	$(OBJCOPY) $< -O binary $@ 
 
-kernel.elf: $(OBJS)
+kernel.elf: $(objs)
 	echo $(call find_files,*.c)
 	$(LD) $^ -o $@ -T platform/current/kernel.ld
 	
-$(C_OBJ): %.o : %.c $(C_H)
+$(c_obj): %.o : %.c $(C_H)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(ASM_OBJ): %.o: %.s
+$(asm_obj): %.o: %.s
 	$(AS) $< -o $@
 
 .PHONY: clean
