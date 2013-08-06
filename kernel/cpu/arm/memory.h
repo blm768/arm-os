@@ -1,5 +1,5 @@
-#ifndef _ARM_MEMORY_H
-#define _ARM_MEMORY_H
+#ifndef _CPU_MEMORY_H
+#define _CPU_MEMORY_H
 
 #include "common.h"
 

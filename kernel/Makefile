@@ -1,3 +1,6 @@
+include platform/current/use.mak
+include cpu/current/use.mak
+
 CFLAGS += -I.
 CFLAGS += --std=gnu99 -g -O2 -Wall
 
