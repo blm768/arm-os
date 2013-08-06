@@ -1,7 +1,7 @@
 #ifndef _GRAPHICS_H
 #define _GRAPHICS_H
 
-#include "common.h"
+#include "../../common.h"
 
 #include "barrier.h"
 #include "memdef.h"

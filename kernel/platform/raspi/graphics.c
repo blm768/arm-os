@@ -1,6 +1,6 @@
 #include "graphics.h"
-#include "math.h"
-#include "memory.h"
+#include "../../math.h"
+#include "../../memory.h"
 
 #define V_OFFSET 10
 

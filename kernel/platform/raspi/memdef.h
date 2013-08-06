@@ -1,7 +1,7 @@
 #ifndef _MEMDEF_H
 #define _MEMDEF_H
 
-#include "common.h"
+#include "../../common.h"
 
 #include "math.h"
 
