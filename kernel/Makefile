@@ -25,7 +25,6 @@ kernel.img: kernel.elf
 	$(OBJCOPY) $< -O binary $@
 
 kernel.elf: $(objs)
-	echo $(call find_files,*.c)
 	$(LD) $^ -o $@ -T platform/current/kernel.ld
 	
 $(c_obj): %.o : %.c $(C_H)

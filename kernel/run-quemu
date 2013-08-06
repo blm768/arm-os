@@ -1,2 +1,3 @@
 #!/bin/sh
 qemu-system-arm -cpu cortex-a8 -kernel kernel.elf -m 256
+

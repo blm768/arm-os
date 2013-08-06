@@ -14,7 +14,7 @@ void kmain(KMAIN_ARGS) {
 	//enable_irqs();
 	//enable_irq(cpu_timer);
 	//bool status = init_console();
-	bool status;
+	bool status = true;
 	if(status) {
 		//process_atags(atags);
 		init_page_allocators();
