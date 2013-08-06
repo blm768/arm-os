@@ -24,11 +24,11 @@ extern const size_t rel_page_sizes[PAGE_LEVELS];
 extern const size_t page_powers[PAGE_LEVELS];
 
 //Note: must be synchronized with start.s
-#define NUM_PHYS_PAGES 256
+#define MAX_PHYS_PAGES 256
 
 //Slightly convoluted math avoids undefined behavior.
 //To do: start using something like SIZE_T_MAX for portability?
-#define PHYS_BASE (0xFFFFFFFF - (NUM_PHYS_PAGES * PAGE_SIZE_0) + 1)
+#define PHYS_BASE (0xFFFFFFFF - (MAX_PHYS_PAGES * PAGE_SIZE_0) + 1)
 
 #define IO_BASE		(PHYS_BASE - PAGE_SIZE_0)
 

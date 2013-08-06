@@ -7,13 +7,15 @@ AS := $(CC_PREFIX)as
 LD := $(CC_PREFIX)ld
 OBJCOPY := $(CC_PREFIX)objcopy
 
-find_files = $(wildcard $1) $(shell find platform/current -iname '$1') $(shell find cpu/current -iname '$1')
+src_dirs = platform/current cpu/current
+
+find_files = $(wildcard $1) $(shell find -H platform/current -iname '$1') $(shell find -H cpu/current -iname '$1')
 
 c_src := $(call find_files,*.c)
 c_h := $(call find_files,*.h)
 c_obj := $(c_src:%.c=%.o)
 asm_src := $(call find_files,*.s)
-asm_obj := $(asm_src:%.s=%.o)
+asm_obj := $(asm_src:%.s=%_asm.o)
 objs := $(c_obj) $(asm_obj)
 
 kernel.img: kernel.elf
@@ -26,7 +28,7 @@ kernel.elf: $(objs)
 $(c_obj): %.o : %.c $(C_H)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(asm_obj): %.o: %.s
+$(asm_obj): %_asm.o: %.s
 	$(AS) $< -o $@
 
 .PHONY: clean

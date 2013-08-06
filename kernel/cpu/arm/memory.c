@@ -1,5 +1,3 @@
-#include "arm_memory.h"
-
 #include "memory.h"
 
 //16KB-aligned
