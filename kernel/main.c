@@ -1,33 +1,24 @@
 #include "common.h"
 
-#include "atags.h"
-#include "platform/current/gpio.h"
-#include "textcons.h"
-#include "interrupt.h"
+//#include "textcons.h"
+//#include "interrupt.h"
 #include "memory.h"
 #include "string.h"
-#include "platform/current/timer.h"
 
-//To do: peripheral read/write barriers!
+#ifndef KMAIN_ARGS
+	#define KMAIN_ARGS
+#endif
 
-void kmain(uint r0, uint system_type, AtagHeader* atags) {
-	gpio_set_output(16);
-	gpio_set(16);
-	gpio_clear(16);
+void kmain(KMAIN_ARGS) {
 	//interrupt_init();
 	//enable_irqs();
 	//enable_irq(cpu_timer);
-	bool status = init_console();
+	//bool status = init_console();
+	bool status;
 	if(status) {
-		gpio_set(16);
-		process_atags(atags);
+		//process_atags(atags);
 		init_page_allocators();
 	} else {
-		while(true) {
-			gpio_clear(16);
-			busy_wait(250000);
-			gpio_set(16);
-			busy_wait(750000);
-		}
+		//To do: error handling.
 	}
 }

@@ -3,8 +3,7 @@
 
 #include "common.h"
 
-#include "arm_memory.h"
-#include "platform/current/memdef.h"
+#include "cpu/current/memory.h"
 
 //To do: move?
 #define MAX_MEMORY_CHUNKS 1

@@ -9,6 +9,7 @@ typedef struct {
 } UintDivMod;
 
 //Meant only for use with compile-time constants; use the function forms for non-constants.
+//TODO: allow use of non-power-of-two multiples?
 #define ROUND_DOWN(val, mul) ((val) & ~((mul) - 1))
 #define ROUND_UP(val, mul)   (ROUND_DOWN(val, mul) + (((val) & ((mul) - 1)) ? (mul) : 0))
 

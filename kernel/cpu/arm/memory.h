@@ -3,8 +3,7 @@
 
 #include "common.h"
 
-#include "platform/current/memdef.h"
-#include "memory.h"
+#include "cpu/current/memdef.h"
 
 //To do: verify.
 #define SECTION_CACHEABLE 1 << 3
