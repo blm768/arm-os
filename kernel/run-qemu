@@ -1,0 +1,4 @@
+#!/bin/sh
+qemu-system-arm -cpu cortex-a8 -m 256 -serial stdio -kernel kernel.elf -S &
+arm-none-eabi-gdb -iex "add-auto-load-safe-path $pwd/"
+

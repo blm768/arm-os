@@ -31,15 +31,15 @@ static inline void* phys_to_virt(void* phys) {
 	return (void*)((size_t)PHYS_BASE + (size_t)phys);
 }
 
-void* alloc_phys_page(size_t level);
-void free_phys_page(void* page, size_t level);
+void* alloc_phys_page();
+void free_phys_page(void* page);
 
 void* alloc_virt(size_t size);
 void* free_virt(void* ptr);
 
-void map_page(void* phys, void* virt, size_t level);
-void subdivide_page(void* phys, size_t level);
-void get_subpage(void* page, size_t n, size_t level);
+void map_page(void* phys, void* virt);
+//void subdivide_page(void* phys, size_t level);
+//void get_subpage(void* page, size_t n, size_t level);
 
 //To do: error checking.
 /*

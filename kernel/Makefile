@@ -4,15 +4,15 @@ include cpu/current/use.mak
 CFLAGS += -I.
 CFLAGS += --std=gnu99 -g -O2 -Wall
 
-CC_PREFIX := arm-eabi-
+CC_PREFIX := arm-none-eabi-
 CC := $(CC_PREFIX)gcc
 AS := $(CC_PREFIX)as
 LD := $(CC_PREFIX)ld
 OBJCOPY := $(CC_PREFIX)objcopy
 
-src_dirs = platform/current cpu/current
+src_dirs = $(components:%=components/%) platform/current cpu/current
 
-find_files = $(wildcard $1) $(shell find -H platform/current -iname '$1') $(shell find -H cpu/current -iname '$1')
+find_files = $(wildcard $1) $(foreach dir, $(src_dirs), $(shell find -H $(dir) -iname '$1'))
 
 c_src := $(call find_files,*.c)
 c_h := $(call find_files,*.h)

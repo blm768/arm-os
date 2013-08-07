@@ -34,9 +34,10 @@ _start:
 	str r1, [r0]
 	
 	@Map the higher "half".
+	@TODO: make sure the number of pages is high enough to cover the kernel.
 	mov r0, #8
 	mov r1, #0x12
-	@This corresponds to the physical address 0xC0000000.
+	@This corresponds to the virtual address 0xC0000000.
 	ldr r2, =(.p_root_page_table + ((4096 - 1024) * 4))
 	.map_upper:
 		str r1, [r2]
@@ -58,7 +59,7 @@ _start:
 	
 
 	@Map the I/O area. (0x20000000 phys)
-	ldr r1, =0x20000012
+	ldr r1, =(io_base + 0x12)
 	ldr r2, =(.p_root_page_table + ((4096 - num_phys_pages - 1) * 4))
 	str r1, [r2]
 	
@@ -80,10 +81,7 @@ _start:
 .section .text
 .align 2
 
-.global error
-error:
-	b error
-
+@TODO: remove?
 .section .data
 @16KB aligned
 .align 12

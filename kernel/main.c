@@ -1,7 +1,8 @@
 #include "common.h"
 
 //#include "textcons.h"
-//#include "interrupt.h"
+#include "platform/current/console.h"
+#include "cpu/current/interrupt.h"
 #include "memory.h"
 #include "string.h"
 
