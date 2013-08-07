@@ -96,20 +96,6 @@ asm_irq_init:
 .section .data
 .align 2
 
-INTERRUPT_BASE = 0xF200B000
-
-@To do: move symbol definitions back to C land?
-.global interrupt_pending_special
-interrupt_pending_special = (INTERRUPT_BASE + 0x200)
-.global interrupt_pending_normal
-interrupt_pending_normal =  (INTERRUPT_BASE + 0x204)
-
-.global irq_enable
-irq_enable = (INTERRUPT_BASE + 0x210)
-
-.global irq_disable
-irq_disable = (INTERRUPT_BASE + 0x21C)
-
 .ivt:
 	ldr pc, .isrs
 	ldr pc, .isrs + 4
@@ -128,3 +114,4 @@ irq_disable = (INTERRUPT_BASE + 0x21C)
 	.word halt
 	.word irq_handler
 	.word halt
+

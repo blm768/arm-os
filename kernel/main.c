@@ -18,7 +18,7 @@ void kmain(KMAIN_ARGS) {
 	bool status = true;
 	if(status) {
 		//process_atags(atags);
-		init_page_allocators();
+		//init_page_allocators();
 	} else {
 		//To do: error handling.
 	}

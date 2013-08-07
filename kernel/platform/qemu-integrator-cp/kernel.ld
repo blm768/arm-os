@@ -2,33 +2,30 @@
  * Based on Alex Chadwick's linkscript
  */
 
+ENTRY(_start)
+
 SECTIONS {
-	kernel_start = 0xC0000000;
-	kernel_base  = 0xC0000000;
-	. = 0xC008000;
+	. = kernel_start;
 	
-	.init : AT(ADDR(.init) - 0xC000000) {
+	.init : AT(ADDR(.init)) {
 		*(.init)
 	}
 
-	.text : AT(ADDR(.text) - 0xC000000) {
+	.text : AT(ADDR(.text) - kernel_base) {
 		*(.text)
 	}
 	
 	/* 
 	 * To do: move .bss?
 	 */
-	.data : AT(ADDR(.data) - 0xC000000) {
+	.data : AT(ADDR(.data) - kernel_base) {
 		*(.data .bss COMMON)
 	}
 	
-	.rodata : AT(ADDR(.rodata) - 0xC000000) {
+	.rodata : AT(ADDR(.rodata) - kernel_base) {
 		*(.rodata* COMMON)
 	}
 	
 	kernel_end = .;
-
-	/DISCARD/ : {
-		*(*)
-	}
 }
+

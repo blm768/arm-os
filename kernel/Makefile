@@ -3,7 +3,7 @@ include cpu/current/use.mak
 
 COMPILE_FLAGS += -g
 CFLAGS += $(COMPILE_FLAGS) -I.
-CFLAGS += --std=gnu99 -g -O2 -Wall
+CFLAGS += --std=gnu99 -Wall
 ASFLAGS += $(COMPILE_FLAGS)
 
 CC_PREFIX := arm-none-eabi-
@@ -21,6 +21,7 @@ c_h := $(call find_files,*.h)
 c_obj := $(c_src:%.c=%.o)
 asm_src := $(call find_files,*.s)
 asm_obj := $(asm_src:%.s=%_asm.o)
+asm_inc := $(call find_files,*.s.inc)
 objs := $(c_obj) $(asm_obj)
 
 kernel.img: kernel.elf
@@ -29,10 +30,10 @@ kernel.img: kernel.elf
 kernel.elf: $(objs)
 	$(LD) $^ -o $@ -T platform/current/kernel.ld
 	
-$(c_obj): %.o : %.c $(C_H)
+$(c_obj): %.o : %.c $(c_h)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(asm_obj): %_asm.o: %.s
+$(asm_obj): %_asm.o: %.s $(asm_inc)
 	$(AS) $(ASFLAGS) $< -o $@
 
 .PHONY: clean
