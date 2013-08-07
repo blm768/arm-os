@@ -7,7 +7,7 @@ ENTRY(_start)
 SECTIONS {
 	. = kernel_start;
 	
-	.init : AT(ADDR(.init)) {
+	.init : AT(ADDR(.init) - kernel_base) {
 		*(.init)
 	}
 

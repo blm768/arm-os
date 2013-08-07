@@ -83,8 +83,12 @@ _start:
 	orr r0, r0, #0x1
 	mcr p15, 0, r0, c1, c0, 0
 
+	@Restore bootloader parameters.
+	ldmia sp!, {r0-r2}
+
 	@Enter kmain.
-	bl kmain
+	add lr, pc, #0x4
+	ldr pc, =kmain
 	
 	.loop:
 	b .loop
