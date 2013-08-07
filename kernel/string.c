@@ -41,3 +41,4 @@ void uint_to_str(uint value, uint base, char* buf) {
 	}
 	buf[len] = '\0';
 }
+

@@ -1,8 +1,10 @@
 include platform/current/use.mak
 include cpu/current/use.mak
 
-CFLAGS += -I.
+COMPILE_FLAGS += -g
+CFLAGS += $(COMPILE_FLAGS) -I.
 CFLAGS += --std=gnu99 -g -O2 -Wall
+ASFLAGS += $(COMPILE_FLAGS)
 
 CC_PREFIX := arm-none-eabi-
 CC := $(CC_PREFIX)gcc
@@ -31,7 +33,7 @@ $(c_obj): %.o : %.c $(C_H)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(asm_obj): %_asm.o: %.s
-	$(AS) $< -o $@
+	$(AS) $(ASFLAGS) $< -o $@
 
 .PHONY: clean
 
