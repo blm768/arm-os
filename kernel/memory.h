@@ -3,7 +3,8 @@
 
 #include "common.h"
 
-#include "cpu/current/memory.h"
+#include "platform/current/memdef.h"
+#include "platform/current/memory.h"
 
 typedef struct {
 	void* start;
@@ -37,7 +38,7 @@ void free_phys_page(void* page);
 void* alloc_virt(size_t size);
 void* free_virt(void* ptr);
 
-void map_page(void* phys, void* virt);
+void map_pages(void* phys, void* virt, size_t count);
 //void subdivide_page(void* phys, size_t level);
 //void get_subpage(void* page, size_t n, size_t level);
 
@@ -47,6 +48,8 @@ static inline void* alloc_pages(size_t size) {
 	
 }
 */
+
+extern void map_io_area();
 
 #endif
 

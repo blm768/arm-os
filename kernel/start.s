@@ -1,4 +1,4 @@
-.include "cpu/current/memdef.s.inc"
+.include "platform/current/memdef.s.inc"
 
 .global kernel_start
 .global kernel_base
@@ -64,13 +64,6 @@ _start:
 		add r2, r2, #4
 		subs r0, #1
 		bne .map_phys
-	
-
-	@Map the I/O area.
-	@To do: implement mapping multiple pages.
-	ldr r1, =(phys_io_base + 0x12)
-	ldr r2, =(.p_root_page_table + ((4096 - max_phys_pages - 1) * 4))
-	str r1, [r2]
 	
 	@Set domain 0 to have no access restrictions.
 	mov r0, #0x3

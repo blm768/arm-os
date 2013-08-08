@@ -3,7 +3,6 @@
 
 #include "common.h"
 
-#include "cpu/current/memdef.h"
 #include "platform/current/memory.h"
 
 //To do: verify.

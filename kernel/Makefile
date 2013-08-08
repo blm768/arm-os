@@ -1,5 +1,4 @@
 include platform/current/use.mak
-include cpu/current/use.mak
 
 COMPILE_FLAGS += -g
 CFLAGS += $(COMPILE_FLAGS) -I.

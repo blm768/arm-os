@@ -1,4 +1,4 @@
-#include "cpu/current/interrupt.h"
+#include "./interrupt.h"
 
 void c_irq_handler() {
 }

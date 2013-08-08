@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-#include "cpu/current/memdef.h"
+#include "./memdef.h"
 #include "string.h"
 
 #define SERIAL_BASE IO_BASE

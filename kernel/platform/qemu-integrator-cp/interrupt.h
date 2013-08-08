@@ -25,3 +25,4 @@ static inline void disable_irq(IRQ irq) {
 }
 
 #endif
+

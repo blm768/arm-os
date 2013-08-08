@@ -1,7 +1,7 @@
 #include "common.h"
 
 #include "console.h"
-#include "cpu/current/interrupt.h"
+#include "platform/current/interrupt.h"
 #include "memory.h"
 #include "thread.h"
 
@@ -15,9 +15,10 @@ void kmain(KMAIN_ARGS) {
 	//enable_irq(cpu_timer);
 	bool status = init_console();
 	if(status) {
+		get_memory_map();
+		map_io_area();
 		write("Project Greenhorn pre-alpha\n");
 		write("---------------------------\n\n");
-		get_memory_map();
 		write("Available physical memory regions:\n");
 		for(size_t i = 0; i < MAX_MEMORY_CHUNKS; ++i) {
 			MemoryChunk* chunk = mem_chunks + i;

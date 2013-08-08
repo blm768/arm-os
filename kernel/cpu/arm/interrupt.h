@@ -25,9 +25,6 @@ extern void _start();
 
 #define isrs (*(InterruptHandlers*)0x20)
 
-extern uint irq_enable[3];
-extern uint irq_disable[3];
-
 extern void enable_irqs();
 extern void disable_irqs();
 
@@ -45,3 +42,4 @@ static inline void interrupt_init() {
 }
 
 #endif
+

@@ -1,5 +1,3 @@
-.include "platform/current/memdef.s.inc"
-
 kernel_base = 0xC0000000
 kernel_start = kernel_base + 0x8000
 
