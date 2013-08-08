@@ -17,7 +17,8 @@ void init_page_allocators() {
 		//This assumes that page sizes are a power of 2.
 		chunk->start = (void*)p2_round_up((size_t)chunk->start, PAGE_SIZE);
 		chunk->end = (void*)p2_round_down((size_t)chunk->end, PAGE_SIZE);
-		chunk->free_start = chunk->start; tmp_mapping_page = alloc_virt(PAGE_SIZE);
+		chunk->free_start = chunk->start;
+		tmp_mapping_page = alloc_virt(PAGE_SIZE);
 	}
 }
 

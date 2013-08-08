@@ -3,6 +3,7 @@
 #include "console.h"
 #include "cpu/current/interrupt.h"
 #include "memory.h"
+#include "thread.h"
 
 #ifndef KMAIN_ARGS
 	#define KMAIN_ARGS
