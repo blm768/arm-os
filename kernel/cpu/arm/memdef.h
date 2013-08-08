@@ -36,18 +36,18 @@
 #define IO_BASE ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))
 
 //TODO: convert to macros to help constant folding?
-extern void kernel_start;
-extern void kernel_end;
+extern ubyte kernel_start;
+extern ubyte kernel_end;
 //TODO: rename to kernel_page_base or something?
-extern void kernel_base;
+extern ubyte kernel_base;
 
 //To do: use smaller pages?
-#define KERNEL_PAGE_START (void*)ROUND_DOWN((size_t)&kernel_start, PAGE_SIZE_0)
+#define KERNEL_PAGE_START ((void*)ROUND_DOWN((size_t)&kernel_start, PAGE_SIZE))
 //Rounded up to the nearest page
-#define KERNEL_PAGE_END (void*)ROUND_UP((size_t)&kernel_end, PAGE_SIZE_0)
+#define KERNEL_PAGE_END ((void*)ROUND_UP((size_t)&kernel_end, PAGE_SIZE))
 
-#define KERNEL_PHYS_START ((void*)(KERNEL_PAGE_START - &kernel_base))
-#define KERNEL_PHYS_END   ((void*)(KERNEL_PAGE_END   - &kernel_base))
+#define KERNEL_PHYS_START (KERNEL_PAGE_START - (size_t)&kernel_base)
+#define KERNEL_PHYS_END   (KERNEL_PAGE_END   - (size_t)&kernel_base)
 
 #define HEAP_START ((void*)0xC8000000)
 #define HEAP_END   ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))

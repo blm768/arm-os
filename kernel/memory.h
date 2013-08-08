@@ -5,9 +5,6 @@
 
 #include "cpu/current/memory.h"
 
-//To do: move?
-#define MAX_MEMORY_CHUNKS 1
-
 typedef struct {
 	void* start;
 	void* end;
@@ -15,6 +12,8 @@ typedef struct {
 } MemoryChunk;
 
 extern MemoryChunk mem_chunks[MAX_MEMORY_CHUNKS];
+
+extern void get_memory_map();
 
 void init_page_allocators();
 
@@ -27,6 +26,7 @@ typedef struct AllocChunk {
 } AllocChunk;
 
 void* virt_to_phys(void* virt);
+
 static inline void* phys_to_virt(void* phys) {
 	return (void*)((size_t)PHYS_BASE + (size_t)phys);
 }

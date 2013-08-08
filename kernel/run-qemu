@@ -1,4 +1,4 @@
 #!/bin/sh
-qemu-system-arm -cpu cortex-a8 -m 256 -serial stdio -kernel kernel.elf -s -S &
-arm-none-eabi-gdb -q
+qemu-system-arm -cpu cortex-a8 -m 256 -serial stdio -kernel kernel.elf #-s -S &
+#arm-none-eabi-gdb -q
 
