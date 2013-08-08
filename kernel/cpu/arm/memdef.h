@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+#include "platform/current/memdef.h"
+
 #include "math.h"
 
 //#define PAGE_LEVELS 4
@@ -25,14 +27,13 @@
 //Base-2 logarithm of page_sizes
 //extern const size_t page_powers[PAGE_LEVELS];
 
-//Note: must be synchronized with start.s
+//Note: must be synchronized with memdef.s.inc
 #define MAX_PHYS_PAGES 256
 
 //Slightly convoluted math avoids undefined behavior.
 //To do: start using something like SIZE_T_MAX for portability?
 #define PHYS_BASE (0xFFFFFFFF - (MAX_PHYS_PAGES * PAGE_SIZE) + 1)
-
-extern void* io_base;
+#define IO_BASE ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))
 
 //TODO: convert to macros to help constant folding?
 extern void kernel_start;
@@ -49,6 +50,6 @@ extern void kernel_base;
 #define KERNEL_PHYS_END   ((void*)(KERNEL_PAGE_END   - &kernel_base))
 
 #define HEAP_START ((void*)0xC8000000)
-#define HEAP_END   (io_base)
+#define HEAP_END   ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))
 
 #endif

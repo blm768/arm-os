@@ -1,6 +1,8 @@
 #ifndef _CONSOLE_H
 #define _CONSOLE_H
 
+#include "platform/current/console.h"
+
 void write(char* str);
 
 static inline void writeln(char* str) {
@@ -22,11 +24,9 @@ static inline void write_ptr(void* value) {
 }
 
 static inline void die(char* msg) {
-	//To do: more reliable check?
-	if(console.width > 0) {
-		writeln("Fatal error:");
-		writeln(msg);
-	}
+	//To do: check if console is initialized.
+	writeln("Fatal error:");
+	writeln(msg);
 	while(true) {}
 }
 

@@ -66,8 +66,9 @@ _start:
 		bne .map_phys
 	
 
-	@Map the I/O area. (0x20000000 phys)
-	ldr r1, =(io_base + 0x12)
+	@Map the I/O area.
+	@To do: implement mapping multiple pages.
+	ldr r1, =(phys_io_base + 0x12)
 	ldr r2, =(.p_root_page_table + ((4096 - max_phys_pages - 1) * 4))
 	str r1, [r2]
 	
