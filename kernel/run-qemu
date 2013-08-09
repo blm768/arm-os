@@ -1,4 +1,14 @@
 #!/bin/sh
-qemu-system-arm -cpu cortex-a8 -m 256 -serial stdio -kernel kernel.elf -s -S &
-arm-none-eabi-gdb -q
+
+while getopts ":d" option; do
+	case $option in
+		d)	qemu_args="-s -S &"
+			debug=true
+	esac
+done
+
+eval "qemu-system-arm -cpu cortex-a8 -m 256 -serial stdio -kernel kernel.elf $qemu_args"
+if [ $debug ]; then
+	arm-none-eabi-gdb -q
+fi
 

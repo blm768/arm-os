@@ -10,13 +10,13 @@
 #endif
 
 void kmain(KMAIN_ARGS) {
+	get_memory_map();
+	map_io_area();
 	interrupt_init();
 	//enable_irqs();
 	//enable_irq(cpu_timer);
 	bool status = init_console();
 	if(status) {
-		get_memory_map();
-		map_io_area();
 		write("Project Greenhorn pre-alpha\n");
 		write("---------------------------\n\n");
 		write("Available physical memory regions:\n");
