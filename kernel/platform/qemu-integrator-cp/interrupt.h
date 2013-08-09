@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+#include "cpu/current/interrupt.h"
+
 #include "bitutils.h"
 
 typedef enum {

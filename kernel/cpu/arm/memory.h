@@ -3,8 +3,6 @@
 
 #include "common.h"
 
-#include "platform/current/memory.h"
-
 //To do: verify.
 #define SECTION_CACHEABLE 1 << 3
 #define SECTION_BUFFERABLE 1 << 2

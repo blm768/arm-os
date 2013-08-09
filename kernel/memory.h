@@ -38,7 +38,7 @@ void free_phys_page(void* page);
 void* alloc_virt(size_t size);
 void* free_virt(void* ptr);
 
-void map_pages(void* phys, void* virt, size_t count);
+void map_pages(void* virt, void* phys, size_t count);
 //void subdivide_page(void* phys, size_t level);
 //void get_subpage(void* page, size_t n, size_t level);
 

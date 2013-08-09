@@ -11,7 +11,7 @@
 
 #define PAGE_SIZE (1024 * 1024)
 //The power of two needed to reach PAGE_SIZE
-#define PAGE_SIZE_POWER 10
+#define PAGE_SIZE_POWER 20
 
 //The size of a section relative to the smallest page size
 //#define SECTION_RELATIVE_SIZE 1024
@@ -32,7 +32,7 @@
 
 //Slightly convoluted math avoids undefined behavior.
 //To do: start using something like SIZE_T_MAX for portability?
-#define PHYS_BASE (0xFFFFFFFF - (MAX_PHYS_PAGES * PAGE_SIZE) + 1)
+#define PHYS_BASE ((void*)(0xFFFFFFFF - (MAX_PHYS_PAGES * PAGE_SIZE) + 1))
 #define IO_BASE ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))
 
 //TODO: convert to macros to help constant folding?
