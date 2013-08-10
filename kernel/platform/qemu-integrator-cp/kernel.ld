@@ -25,7 +25,15 @@ SECTIONS {
 	.rodata : AT(ADDR(.rodata) - kernel_base) {
 		*(.rodata* COMMON)
 	}
-	
+
 	kernel_end = .;
+	driver_start = .;
+	
+	.drivers : AT(ADDR(.drivers) - kernel_base) {
+		*(.drivers)
+	}
+
+	driver_end = .;
+	
 }
 

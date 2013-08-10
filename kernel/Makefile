@@ -15,6 +15,11 @@ src_dirs = $(components:%=components/%) platform/current cpu/current
 
 find_files = $(wildcard $1) $(foreach dir, $(src_dirs), $(shell find -H $(dir) -iname '$1'))
 
+ifeq ($(include_drivers),true)
+	drivers := $(shell find drivers -iname '*.elf')
+	src_dirs += drivers
+endif
+
 c_src := $(call find_files,*.c)
 c_h := $(call find_files,*.h)
 c_obj := $(c_src:%.c=%.o)
@@ -23,8 +28,10 @@ asm_obj := $(asm_src:%.s=%_asm.o)
 asm_inc := $(call find_files,*.s.inc)
 objs := $(c_obj) $(asm_obj)
 
+ifeq ($(create_raw_binary),true)
 kernel.img: kernel.elf
 	$(OBJCOPY) $< -O binary $@
+endif
 
 kernel.elf: $(objs)
 	$(LD) $^ -o $@ -T platform/current/kernel.ld

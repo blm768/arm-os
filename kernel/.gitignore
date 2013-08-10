@@ -1,3 +1,6 @@
 platform/current
 cpu/current
 
+drivers/*
+!drivers/.keep
+

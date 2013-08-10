@@ -19,8 +19,7 @@
 //#define PAGE_POWER_MIN 10
 
 //Available page sizes on the machine
-//extern const size_t page_sizes[PAGE_LEVELS];
-
+//extern const size_t page_sizes[PAGE_LEVELS]; 
 //Page sizes relative to the smallest page size
 //extern const size_t rel_page_sizes[PAGE_LEVELS];
 
@@ -51,5 +50,11 @@ extern ubyte kernel_base;
 
 #define HEAP_START ((void*)0xC8000000)
 #define HEAP_END   ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))
+
+#define DRIVER_START ((void*)0x80000000)
+#define DRIVER_END KERNEL_PAGE_START
+
+extern ubyte driver_img_start;
+extern ubyte driver_img_end;
 
 #endif
