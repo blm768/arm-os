@@ -7,6 +7,7 @@
 typedef signed char byte;
 typedef unsigned char ubyte;
 
+typedef unsigned short ushort;
 typedef unsigned int  uint;
 typedef unsigned long ulong;
 
@@ -43,3 +44,4 @@ static inline void* memcpy(void* dest, const void* src, size_t num) {
 }
 
 #endif
+

@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include "console.h"
+#include "driver.h"
 #include "platform/current/interrupt.h"
 #include "memory.h"
 #include "thread.h"
@@ -16,6 +17,7 @@ void kmain(KMAIN_ARGS) {
 	if(status) {
 		write("Project Greenhorn pre-alpha\n");
 		write("---------------------------\n\n");
+		load_drivers();
 		init_page_allocators();
 		interrupt_init();
 		enable_irqs();

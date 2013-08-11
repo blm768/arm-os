@@ -1,7 +1,9 @@
 #ifndef _ELF_H
 #define _ELF_H
 
-struct ElfHeader {
+#include "common.h"
+
+typedef struct {
 	ubyte ident[16];
 	ushort type;
 	ushort machine;
@@ -16,7 +18,7 @@ struct ElfHeader {
 	ushort sh_entry_size;
 	ushort num_sh_entries;
 	ushort strtab_entry_offset;
-}
+} ElfHeader;
 
 enum ProgramEntryType {
 	PT_NULL,
@@ -26,9 +28,9 @@ enum ProgramEntryType {
 	PT_NOTE,
 	PT_SHLIB,
 	PT_PHDR,
-}
+};
 
-struct ElfProgramHeader {
+typedef struct {
 	uint type;
 	uint offset;
 	uint vaddr;
@@ -37,7 +39,9 @@ struct ElfProgramHeader {
 	uint memory_size;
 	uint flags;
 	uint align;
-}
+} ElfProgramHeader;
+
+extern void load_elf(ElfHeader* header);
 
 #endif
 
