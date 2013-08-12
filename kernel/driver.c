@@ -12,6 +12,7 @@ void load_drivers() {
 }
 
 void load_driver(ElfHeader* header) {
+	bool valid = elf_is_valid(header);
 	ElfSegment* segments = program_header(header);
 }
 
