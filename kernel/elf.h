@@ -39,7 +39,13 @@ typedef struct {
 	uint memory_size;
 	uint flags;
 	uint align;
-} ElfProgramHeader;
+} ElfSegment;
+
+extern bool elf_is_valid(ElfHeader* header);
+
+static inline ElfSegment* program_header(ElfHeader* header) {
+	return (ElfSegment*)((void*)header + header->ph_offset);
+}
 
 extern void load_elf(ElfHeader* header);
 

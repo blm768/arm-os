@@ -19,7 +19,7 @@ SECTIONS {
 	 * To do: move .bss?
 	 */
 	.data : AT(ADDR(.data) - kernel_base) {
-		*(.data .bss COMMON)
+		*(.data .bss .drivers COMMON)
 	}
 	
 	.rodata : AT(ADDR(.rodata) - kernel_base) {
@@ -27,13 +27,9 @@ SECTIONS {
 	}
 
 	kernel_end = .;
-	driver_start = .;
 	
-	.drivers : AT(ADDR(.drivers) - kernel_base) {
+	/*.drivers : AT(ADDR(.drivers) - kernel_base) {
 		*(.drivers)
-	}
-
-	driver_end = .;
-	
+	}*/
 }
 

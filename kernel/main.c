@@ -17,6 +17,9 @@ void kmain(KMAIN_ARGS) {
 	if(status) {
 		write("Project Greenhorn pre-alpha\n");
 		write("---------------------------\n\n");
+		write("Drivers: ");
+		write_uint(num_drivers);
+		write_char('\n');
 		load_drivers();
 		init_page_allocators();
 		interrupt_init();
