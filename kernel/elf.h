@@ -31,6 +31,12 @@ enum ProgramEntryType {
 	PT_PHDR,
 };
 
+enum ProgramEntryFlags {
+	PF_X = 1,
+	PF_R = 2,
+	PF_W = 4,
+};
+
 typedef struct {
 	uint type;
 	uint offset;

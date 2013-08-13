@@ -1,2 +1,2 @@
-.include "cpu/arm/memdef.s.inc"
+.include "cpu/current/memdef.s.inc"
 

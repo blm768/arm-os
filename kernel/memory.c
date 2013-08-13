@@ -10,7 +10,7 @@ void* heap_watermark = HEAP_START;
 //For use only by allocators
 static void* tmp_mapping_page;
 
-void init_page_allocators() {
+void init_phys_allocators() {
 	//For now, memory chunks are rounded to the nearest root-level page.
 	for(size_t i = 0; i < MAX_MEMORY_CHUNKS; ++i) {
 		MemoryChunk* chunk = mem_chunks + i;

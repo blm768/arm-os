@@ -9,7 +9,7 @@
 
 #define ENTRY_HIGH_BIT (1 << 4)
 
-#define ADDRESS_MASK_SECTION (~((1 << 20) - 1))
+#define SECTION_ADDRESS_MASK (~((1 << 20) - 1))
 
 #define ENTRY_TYPE_MASK 0x3
 #define ENTRY_TYPE_ABSENT 0

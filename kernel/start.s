@@ -28,10 +28,10 @@ _start:
 	mcr p15, 0, r0, c2, c0, 0
 	mcr p15, 0, r0, c2, c0, 1
 	@Set TTBCR so addresses above 0x80000000 are mapped using TTBR1:
-	mrc p15, 0, r1, c2, c0, 2
-	bic r1, #7
-	orr r1, #1
 	@Commented out so we stick with TTBR0 for now
+	@mrc p15, 0, r1, c2, c0, 2
+	@bic r1, #7
+	@orr r1, #1
 	@mcr p15, 0, r1, c2, c0, 2
 
 	@Identity map the first 1MB.
@@ -43,7 +43,7 @@ _start:
 	@Map the higher "half".
 	@TODO: make sure the number of pages is high enough to cover the kernel.
 	mov r0, #8
-	mov r1, #0x12
+	mov r1, #0x2
 	@This corresponds to the virtual address 0xC0000000.
 	ldr r2, =(.p_root_page_table + ((4096 - 1024) * 4))
 	.map_upper:
@@ -55,7 +55,7 @@ _start:
 	
 	@Map the physical memory area.
 	mov r0, #max_phys_pages
-	mov r1, #0x12
+	mov r1, #0x2
 	ldr r2, =(.p_root_page_table + (4096 - max_phys_pages) * 4)
 	.map_phys:
 		str r1, [r2]

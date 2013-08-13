@@ -21,11 +21,12 @@ void load_driver(ElfHeader* header) {
 	for(size_t i = 0; i < num_segments; ++i) {
 		ElfSegment* segment = segments + i;
 
-		if(segment->type == PT_LOAD) {
+		//TODO: loading for other segment types?
+		if(segment->type != PT_LOAD) {
 			continue;
 		}
 
-
+		
 	}
 }
 

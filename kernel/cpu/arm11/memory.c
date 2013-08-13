@@ -8,8 +8,10 @@ PageEntry root_page_table[4096] __attribute__((__aligned__(16384)));
 void* virt_to_phys(void* virt) {
 	PageEntry entry = root_page_table[(size_t)virt >> PAGE_SIZE_POWER];
 	size_t type = (size_t)entry.ptr & ENTRY_TYPE_MASK;
-	if(type == ENTRY_TYPE_SECTION) {
-		return (void*)((size_t)entry.ptr & ADDRESS_MASK_SECTION);
+	switch(type) {
+		case ENTRY_TYPE_SECTION:
+		return (void*)((size_t)entry.ptr & SECTION_ADDRESS_MASK);
+		//break;
 	}
 	return NULL;
 }

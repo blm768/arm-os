@@ -16,7 +16,7 @@ extern MemoryChunk mem_chunks[MAX_MEMORY_CHUNKS];
 
 extern void get_memory_map();
 
-void init_page_allocators();
+void init_phys_allocators();
 
 typedef struct {
 	void* next;
