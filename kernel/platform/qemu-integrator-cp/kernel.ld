@@ -4,32 +4,28 @@
 
 ENTRY(_start)
 
+/*PHDRS {
+
+}*/
+
 SECTIONS {
 	. = kernel_start;
 	
-	.init : AT(ADDR(.init) - kernel_base) {
-		*(.init)
-	}
-
 	.text : AT(ADDR(.text) - kernel_base) {
-		*(.text)
-	}
-	
-	/* 
-	 * To do: move .bss?
-	 */
-	.data : AT(ADDR(.data) - kernel_base) {
-		*(.data .bss .drivers COMMON)
+		*(.init .text)
 	}
 	
 	.rodata : AT(ADDR(.rodata) - kernel_base) {
 		*(.rodata* COMMON)
 	}
 
-	kernel_end = .;
-	
-	/*.drivers : AT(ADDR(.drivers) - kernel_base) {
+	/* 
+	 * To do: move .bss to own output section?
+	 */
+	.data : AT(ADDR(.data) - kernel_base) {
+		*(.data .bss)
+		kernel_end = .;
 		*(.drivers)
-	}*/
+	}
 }
 

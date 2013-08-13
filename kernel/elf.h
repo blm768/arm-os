@@ -4,7 +4,8 @@
 #include "common.h"
 
 typedef struct {
-	ubyte ident[16];
+	char magic[4];
+	ubyte ident[12];
 	ushort type;
 	ushort machine;
 	uint version;
@@ -40,8 +41,6 @@ typedef struct {
 	uint flags;
 	uint align;
 } ElfSegment;
-
-extern bool elf_is_valid(ElfHeader* header);
 
 static inline ElfSegment* program_header(ElfHeader* header) {
 	return (ElfSegment*)((void*)header + header->ph_offset);
