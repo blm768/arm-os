@@ -48,5 +48,7 @@ static inline ElfSegment* program_header(ElfHeader* header) {
 
 extern void load_elf(ElfHeader* header);
 
+extern bool elf_is_valid(ElfHeader* header);
+
 #endif
 

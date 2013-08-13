@@ -18,6 +18,8 @@ void kmain(KMAIN_ARGS) {
 		write("Project Greenhorn pre-alpha\n");
 		write("---------------------------\n\n");
 		write("Drivers: ");
+		//Drivers must be loaded before any heap allocations
+		//because driver images are stored at the beginning of the heap.
 		load_drivers();
 		init_page_allocators();
 		interrupt_init();
