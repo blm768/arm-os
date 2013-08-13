@@ -5,8 +5,7 @@
 
 .global max_phys_pages
 
-@Physically placed at 0x8000
-.section .init
+.section .entry
 .align 2
 
 @The bootloader puts root_page_table at this physical address.

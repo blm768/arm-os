@@ -12,7 +12,7 @@ SECTIONS {
 	. = kernel_start;
 	
 	.text : AT(ADDR(.text) - kernel_base) {
-		*(.init .text)
+		*(.entry .text)
 	}
 	
 	.rodata : AT(ADDR(.rodata) - kernel_base) {

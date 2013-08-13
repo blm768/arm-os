@@ -20,9 +20,8 @@ void load_driver(ElfHeader* header) {
 	ElfSegment* segments = program_header(header);
 	for(size_t i = 0; i < num_segments; ++i) {
 		ElfSegment* segment = segments + i;
-		//Only PT_LOAD segments of drivers are loaded.
-		//TODO: document or change.
-		if(segment->type != PT_LOAD) {
+
+		if(segment->type == PT_LOAD) {
 			continue;
 		}
 
