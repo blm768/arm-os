@@ -5,7 +5,7 @@
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
 typedef struct {
-	uint quotient, remainder;
+	size_t quotient, remainder;
 } UintDivMod;
 
 //Meant only for use with compile-time constants; use the function forms for non-constants.
@@ -36,17 +36,17 @@ static inline size_t lsr_round_up(size_t val, size_t pow) {
 
 //To do: use more efficient algorithm?
 //To do: rename?
-static inline UintDivMod uintDivMod(uint a, uint b) {
+static inline UintDivMod uintDivMod(size_t a, size_t b) {
 	UintDivMod div = {0, 0};
 	//To do: better error handling?
 	if(b == 0) {
 		return div;
 	}
-	size_t i = sizeof(uint) * 8;
+	size_t i = sizeof(size_t) * 8;
 	while(i > 0) {
 		--i;
 		div.remainder <<= 1;
-		uint mask = 1 << i;
+		size_t mask = 1 << i;
 		div.remainder = (div.remainder & ~0x1) | ((a & mask) >> i);
 		if(div.remainder >= b) {
 			div.remainder -= b;
@@ -57,3 +57,4 @@ static inline UintDivMod uintDivMod(uint a, uint b) {
 }
 
 #endif
+

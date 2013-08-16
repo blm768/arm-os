@@ -35,10 +35,10 @@
 #define IO_BASE ((void*)(PHYS_BASE - NUM_IO_PAGES * PAGE_SIZE))
 
 //TODO: convert to macros to help constant folding?
-extern ubyte kernel_start;
-extern ubyte kernel_end;
+extern uint8_t kernel_start;
+extern uint8_t kernel_end;
 //TODO: rename to kernel_page_base or something?
-extern ubyte kernel_base;
+extern uint8_t kernel_base;
 
 //To do: use smaller pages?
 #define KERNEL_PAGE_START ((void*)ROUND_DOWN((size_t)&kernel_start, PAGE_SIZE))
@@ -54,7 +54,8 @@ extern ubyte kernel_base;
 #define DRIVER_START ((void*)0x80000000)
 #define DRIVER_END KERNEL_PAGE_START
 
-extern ubyte driver_img_start;
-extern ubyte driver_img_end;
+extern uint8_t driver_img_start;
+extern uint8_t driver_img_end;
 
 #endif
+

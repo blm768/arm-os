@@ -3,7 +3,6 @@
 
 #include "common.h"
 
-#include "bitutils.h"
 #include "platform/current/interrupt.h"
 
 typedef void(*ISR)();

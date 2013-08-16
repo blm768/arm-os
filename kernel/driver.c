@@ -1,11 +1,25 @@
 #include "driver.h"
 
+#include "memory.h"
+
 #include "console.h"
+
+void alloc_driver_stack() {
+
+}
+
+//Allocates virtual memory for a driver ELF segment
+void* alloc_driver_segment(size_t size) {
+	size_t pages = size >> PAGE_SIZE_POWER;
+
+	return NULL;
+}
 
 void load_drivers() {
 	DriverEntry* entries = &first_driver_entry;
 	for(size_t i = 0; i < num_drivers; ++i) {
-		DriverEntry* entry = entries + i; writeln(entry->name);
+		DriverEntry* entry = entries + i;
+		writeln(entry->name);
 		load_driver((ElfHeader*)(entry->image));
 	}
 }
@@ -26,7 +40,10 @@ void load_driver(ElfHeader* header) {
 			continue;
 		}
 
-		
+		void* dest = alloc_driver_segment(0);	
+		if(!dest) {
+			die("Unable to allocate address space for driver segment");
+		}
 	}
 }
 

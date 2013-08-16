@@ -33,7 +33,7 @@ void* alloc_phys_page() {
 			//Is there a free page in this chunk?
 			if(chunk->free_start < chunk-> end) {
 				void* page = chunk->free_start;
-				*(ubyte**)chunk->free_start += PAGE_SIZE;
+				chunk->free_start = page + PAGE_SIZE;
 				return page;
 			}
 		}

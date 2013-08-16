@@ -3,21 +3,13 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-
-typedef signed char byte;
-typedef unsigned char ubyte;
-
-typedef unsigned short ushort;
-typedef unsigned int  uint;
-typedef unsigned long ulong;
-
-extern void error(uint);
+#include <stdint.h>
 
 void word_copy(void* dest, const void* src, size_t num);
 
 static inline void byte_copy(void* dest, const void* src, size_t num) {
 	for(size_t i = 0; i < num; ++i) {
-		((ubyte*)dest)[i] = ((ubyte*)src)[i];
+		((char*)dest)[i] = ((char*)src)[i];
 	}
 }
 
@@ -32,9 +24,11 @@ static inline void* memcpy(void* dest, const void* src, size_t num) {
 		*(char**)dest += dest_head;
 		*(char**)src  += dest_head;
 		num -= dest_head;
+		//TODO: make platform-independent!
 		size_t words = num >> 3;
 		//Word-copy as much as possible and byte-copy the rest.
 		word_copy(dest, src, words);
+		//TODO: make platform-independent!
 		byte_copy(dest + words * sizeof(size_t), src + words * sizeof(size_t), num & 0x7);
 	} else {
 		//The areas have different alignments; fall back to a byte copy.

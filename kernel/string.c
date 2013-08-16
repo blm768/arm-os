@@ -15,11 +15,11 @@ void string_copy(char* dest, char* src, size_t len) {
 	dest[i] = '\0';
 }
 
-char digit_to_char(uint digit) {
+char digit_to_char(size_t digit) {
 	return (digit < 10) ? ('0' + digit) : ('A' + (digit - 10));
 }
 
-void uint_to_str(uint value, uint base, char* buf) {
+void uint_to_str(size_t value, size_t base, char* buf) {
 	if(value == 0) {
 		string_copy(buf, "0", 1);
 		return;

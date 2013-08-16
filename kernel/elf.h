@@ -5,20 +5,20 @@
 
 typedef struct {
 	char magic[4];
-	ubyte ident[12];
-	ushort type;
-	ushort machine;
-	uint version;
-	uint entry;
-	uint ph_offset;
-	uint sh_offset;
-	uint flags;
-	ushort header_size;
-	ushort ph_entry_size;
-	ushort num_ph_entries;
-	ushort sh_entry_size;
-	ushort num_sh_entries;
-	ushort strtab_entry_offset;
+	uint8_t ident[12];
+	uint16_t type;
+	uint16_t machine;
+	uint32_t version;
+	uint32_t entry;
+	uint32_t ph_offset;
+	uint32_t sh_offset;
+	uint32_t flags;
+	uint16_t header_size;
+	uint16_t ph_entry_size;
+	uint16_t num_ph_entries;
+	uint16_t sh_entry_size;
+	uint16_t num_sh_entries;
+	uint16_t strtab_entry_offset;
 } ElfHeader;
 
 enum ProgramEntryType {
@@ -38,14 +38,14 @@ enum ProgramEntryFlags {
 };
 
 typedef struct {
-	uint type;
-	uint offset;
-	uint vaddr;
-	uint paddr;
-	uint file_length;
-	uint memory_size;
-	uint flags;
-	uint align;
+	uint32_t type;
+	uint32_t offset;
+	uint32_t vaddr;
+	uint32_t paddr;
+	uint32_t file_length;
+	uint32_t memory_size;
+	uint32_t flags;
+	uint32_t align;
 } ElfSegment;
 
 static inline ElfSegment* program_header(ElfHeader* header) {

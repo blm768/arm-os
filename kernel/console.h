@@ -10,16 +10,17 @@ static inline void writeln(char* str) {
 	write_newline();
 }
 
-static inline void write_uint(uint value) {
+static inline void write_uint(size_t value) {
 	char buf[16];
+	//TODO: support larger integers without buffer overflow.
 	uint_to_str(value, 10, buf);
 	write(buf);
 }
 
 static inline void write_ptr(void* value) {
+	//TODO: make this independent of word size!
 	char buf[16];
-	//To do: make this independent of word size!
-	uint_to_str((uint)value, 16, buf);
+	uint_to_str((size_t)value, 16, buf);
 	write(buf);
 }
 

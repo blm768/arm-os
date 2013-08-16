@@ -1,7 +1,8 @@
 COMPILE_FLAGS += -g
-CFLAGS += $(COMPILE_FLAGS) -I. -fpic
+CFLAGS += $(COMPILE_FLAGS) -I. -fpie
 CFLAGS += --std=gnu99 -Wall
 ASFLAGS += $(COMPILE_FLAGS)
+LDFLAGS += -pie
 
 CC_PREFIX := arm-none-eabi-
 CC := $(CC_PREFIX)gcc

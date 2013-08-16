@@ -5,14 +5,12 @@
 
 #include "cpu/current/interrupt.h"
 
-#include "bitutils.h"
-
 typedef enum {
 	none
 } IRQ;
 
-extern uint irq_enable[3];
-extern uint irq_disable[3];
+extern uint32_t irq_enable[3];
+extern uint32_t irq_disable[3];
 
 static inline void enable_irq(IRQ irq) {
 	const size_t shift = irq & 31;

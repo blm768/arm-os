@@ -8,7 +8,7 @@
 
 #define SERIAL_BASE IO_BASE
 #define SERIAL_OUT (*(char*)(SERIAL_BASE))
-#define SERIAL_FLAGS (*(ulong*)(SERIAL_BASE + 0x18))
+#define SERIAL_FLAGS (*(uint64_t*)(SERIAL_BASE + 0x18))
 #define SERIAL_BUFFER_FULL (1 << 5)
 
 static inline bool init_console() {
