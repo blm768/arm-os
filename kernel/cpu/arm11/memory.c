@@ -9,10 +9,6 @@ PageEntry root_page_table[4096] __attribute__((__aligned__(16384)));
 //To do: error checking (i.e. unmapped pages)
 void* virt_to_phys(void* virt) {
 	PageEntry entry = root_page_table[(size_t)virt >> PAGE_SIZE_POWER];
-	write_uint((size_t)virt);
-	write("\n");
-	write_uint((size_t)virt >> PAGE_SIZE_POWER);
-	write("\n");
 	size_t type = (size_t)entry.ptr & ENTRY_TYPE_MASK;
 	switch(type) {
 		case ENTRY_TYPE_SECTION:

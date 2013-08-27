@@ -18,8 +18,6 @@ void kmain(KMAIN_ARGS) {
 	map_io_area();
 	bool status = init_console();
 	if(status) {
-		write("Project Greenhorn pre-alpha\n");
-		write("---------------------------\n\n");
 		init_phys_allocators();
 		//Drivers must be loaded before any heap allocations
 		//because driver images are stored at the beginning of the heap.

@@ -50,14 +50,22 @@ void load_driver(ElfHeader* header) {
 			continue;
 		}
 
+		if(segment->memory_size == 0) {
+			continue;
+		}
+
 		void* virt = alloc_driver_segment(0);
 		if(!virt) {
 			die("Unable to allocate address space for driver segment");
 		}
 
-		void* phys = virt_to_phys(segment);
-		write_ptr(phys);
-		write_char('\n');
+		for(size_t i = 0; i < lsr_round_up(segment->memory_size, PAGE_SIZE_POWER); ++i) {
+			void* phys = alloc_phys_page();
+			map_pages((uint8_t*)virt + PAGE_SIZE * i, phys, 1);
+		}
+
+		memcpy(virt, (uint8_t*)header + segment->offset, segment->memory_size);
+		//TODO: clear .bss area?
 	}
 }
 

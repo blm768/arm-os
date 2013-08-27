@@ -20,12 +20,12 @@ static inline void* memcpy(void* dest, const void* src, size_t num) {
 	size_t src_head  = sizeof(size_t) - ((size_t)src % sizeof(size_t));
 	if(src_head == dest_head) {
 		//Source and destination are similarly aligned; we may be able to use word copies.
+		//Byte-copy until we reach word alignment.
 		byte_copy(dest, src, dest_head);
 		*(char**)dest += dest_head;
 		*(char**)src  += dest_head;
 		num -= dest_head;
-		//TODO: make platform-independent!
-		size_t words = num >> 3;
+		size_t words = num / sizeof(size_t);
 		//Word-copy as much as possible and byte-copy the rest.
 		word_copy(dest, src, words);
 		//TODO: make platform-independent!
