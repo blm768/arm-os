@@ -26,6 +26,7 @@ void uint_to_str(size_t value, size_t base, char* buf) {
 	}
 	
 	//To do: adjust size?
+	//TODO: make independent of word size!
 	char buf2[16];
 	
 	size_t len = 0;

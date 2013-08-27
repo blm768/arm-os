@@ -50,10 +50,14 @@ void load_driver(ElfHeader* header) {
 			continue;
 		}
 
-		void* dest = alloc_driver_segment(0);	
-		if(!dest) {
+		void* virt = alloc_driver_segment(0);
+		if(!virt) {
 			die("Unable to allocate address space for driver segment");
 		}
+
+		void* phys = virt_to_phys(segment);
+		write_ptr(phys);
+		write_char('\n');
 	}
 }
 

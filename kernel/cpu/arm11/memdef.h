@@ -7,8 +7,6 @@
 
 #include "math.h"
 
-//#define PAGE_LEVELS 4
-
 #define PAGE_SIZE (1024 * 1024)
 //The power of two needed to reach PAGE_SIZE
 #define PAGE_SIZE_POWER 20

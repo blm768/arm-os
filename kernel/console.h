@@ -11,14 +11,15 @@ static inline void writeln(char* str) {
 }
 
 static inline void write_uint(size_t value) {
+	//TODO: make this independent of word size!
 	char buf[16];
-	//TODO: support larger integers without buffer overflow.
 	uint_to_str(value, 10, buf);
 	write(buf);
 }
 
 static inline void write_ptr(void* value) {
 	//TODO: make this independent of word size!
+	//TODO: add leading zeroes.
 	char buf[16];
 	uint_to_str((size_t)value, 16, buf);
 	write(buf);
