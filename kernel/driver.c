@@ -8,11 +8,21 @@ void alloc_driver_stack() {
 
 }
 
+static void* driver_segment_start = DRIVER_START;
+
 //Allocates virtual memory for a driver ELF segment
 void* alloc_driver_segment(size_t size) {
-	size_t pages = size >> PAGE_SIZE_POWER;
+	size_t pages = p2_round_up(size, PAGE_SIZE);
+	size_t paged_size = pages * PAGE_SIZE;
 
-	return NULL;
+	void* allocated = driver_segment_start;
+	void* new_start = allocated + paged_size;
+	if(new_start >= DRIVER_END) {
+		return NULL;
+	}
+	driver_segment_start = new_start;
+
+	return allocated;
 }
 
 void load_drivers() {

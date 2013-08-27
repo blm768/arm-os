@@ -1,5 +1,5 @@
 COMPILE_FLAGS += -g
-CFLAGS += $(COMPILE_FLAGS) -I. -fpie
+CFLAGS += $(COMPILE_FLAGS) -I../../../kernel -fpie
 CFLAGS += --std=gnu99 -Wall
 ASFLAGS += $(COMPILE_FLAGS)
 LDFLAGS += -pie
