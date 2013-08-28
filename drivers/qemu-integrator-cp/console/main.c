@@ -23,7 +23,7 @@ void write(char* str) {
 	}
 }
 
-int driver_main(int argc, char** argv) {
+int main(int argc, char** argv) {
 	write("Testing!");
 	return 0;
 }

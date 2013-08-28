@@ -34,6 +34,8 @@ void load_drivers() {
 	}
 }
 
+typedef void(*EntryPoint)();
+
 void load_driver(ElfHeader* header) {
 	bool valid = elf_is_valid(header);
 	if(!valid) {
@@ -65,6 +67,9 @@ void load_driver(ElfHeader* header) {
 		}
 
 		memcpy(virt, (uint8_t*)header + segment->offset, segment->memory_size);
+
+		void* start = virt + header->entry - segment->offset;
+		((EntryPoint)start)();
 		//TODO: clear .bss area?
 	}
 }
