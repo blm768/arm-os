@@ -24,7 +24,7 @@ void write(char* str) {
 }
 
 int main(int argc, char** argv) {
-	write("Testing!");
+	write("Testing!\n");
 	return 0;
 }
 
